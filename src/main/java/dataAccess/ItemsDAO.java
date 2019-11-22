@@ -9,6 +9,10 @@ public class ItemsDAO implements ItemDAO {
 
     private ArrayList<Item> items;
     
+    public ItemsDAO(){
+        items = new ArrayList<>();
+    }
+    
     public void create(Object item) {
         Item newItem = (Item)item;
         items.add(newItem);

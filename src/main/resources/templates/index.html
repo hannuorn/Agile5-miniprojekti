@@ -1,5 +1,6 @@
 <h1>Vinkkikirjasto</h1>
 
-<ul>
-	<p>$info</p>    
-</ul>
+    #foreach($row in $list)
+    <p>$row.getInfo()</p>
+    #end
+
