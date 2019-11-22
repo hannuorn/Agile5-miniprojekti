@@ -2,6 +2,16 @@ apply plugin: 'java'
 
 apply plugin: 'application'
 
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies{
+    compile group: 'com.sparkjava', name: 'spark-core', version: '2.7.1'
+    compile group: 'com.sparkjava', name: 'spark-template-velocity', version: '2.7.1'
+}
+
 mainClassName = 'Main'
 
 jar {
@@ -9,3 +19,5 @@ jar {
         attributes 'Main-Class': 'Main'
     }
 }
+
+
