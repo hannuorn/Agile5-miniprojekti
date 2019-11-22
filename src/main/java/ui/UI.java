@@ -56,9 +56,7 @@ public class UI {
             Book newBook = new Book(author,title,isbn,tags,desc);
             dao.create(newBook);
             
-            model.put("list", dao.list());
-            model.put("template", "templates/index.html");
-            
+            response.redirect("/index");
          
            return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
