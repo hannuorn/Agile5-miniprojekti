@@ -11,11 +11,11 @@ public class BookTest {
         Book book = new Book("Robert Martin", "Clean Code: A Handbook of Agile Software Craftsmanship", "978-0132350884", "Ohjelmointi, design patterns", "TKT20006 Ohjelmistotuotanto");
 
         String string = book.getInfo();
-        String expected = "Kirjoittaja: Robert Martin" + "\n"
-                + "Otsikko: Clean Code: A Handbook of Agile Software Craftsmanship" + "\n"
-                + "Tyyppi: " + "kirja" + "\n"
-                + "ISBN: 978-0132350884" + "\n"
-                + "Tagit: Ohjelmointi, design patterns" + "\n"
+        String expected = "Kirjoittaja: Robert Martin" + "<br/>"
+                + "Otsikko: Clean Code: A Handbook of Agile Software Craftsmanship" + "<br/>"
+                + "Tyyppi: " + "kirja" + "<br/>"
+                + "ISBN: 978-0132350884" + "<br/>"
+                + "Tagit: Ohjelmointi, design patterns" + "<br/>"
                 + "Kommentti: TKT20006 Ohjelmistotuotanto";
 
         assertEquals(expected, string);
