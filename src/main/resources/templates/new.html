@@ -1,17 +1,20 @@
-
+<h1>Lisää vinkki</h1>
 
 <form method="POST" action="/new">
     <fieldset>
-        Author: <input type="text" name="author" id="author" size="15"/>
+        Kirjoittaja: <input type="text" name="author" id="author" size="15"/>
         <br/>
-        Title: <input type="text" name="title" id="title" size="15"/>
+        Otsikko: <input type="text" name="title" id="title" size="15"/>
         <br/> 
         ISBN: <input type="text" name="isbn" id="isbn" size="15"/>
         <br/>  
-        Tags: <input type="text" name="tags" id="tags" size="15"/>
+        Tagit: <input type="text" name="tags" id="tags" size="15"/>
         <br/>  
-        Description: <input type="text" name="description" id="description" size="15"/>
+        Kuvaus: <input type="text" name="description" id="description" size="15"/>
         <br/> 
-        <input name="lisaa" type="submit" value="lisaa" />
+        <input name="lisaa" type="submit" value="Lisää" />
     </fieldset>
 <form> 
+    
+<a href="/">Takaisin etusivulle</a><br/>
+<a href="/all">Kaikkien vinkkien lista</a>

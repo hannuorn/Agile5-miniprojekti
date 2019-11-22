@@ -31,11 +31,16 @@ public class UI {
         System.out.println(book.getInfo());
         dao.create(book);
         
+        get("/", (request, response) -> {
+            HashMap<String, Object> model = new HashMap<>();
+            model.put("template", "templates/index.html");
+            return new ModelAndView(model, LAYOUT);
+        }, new VelocityTemplateEngine());  
         
-        get("/index", (request, response) -> {
+        get("/all", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             model.put("list", dao.list());
-            model.put("template", "templates/index.html");
+            model.put("template", "templates/all.html");
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());  
         
@@ -56,7 +61,7 @@ public class UI {
             Book newBook = new Book(author,title,isbn,tags,desc);
             dao.create(newBook);
             
-            response.redirect("/index");
+            response.redirect("/all");
          
            return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
