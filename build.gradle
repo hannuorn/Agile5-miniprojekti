@@ -1,6 +1,7 @@
 apply plugin: 'java'
 
 apply plugin: 'application'
+apply plugin: 'jacoco'
 
 repositories {
     jcenter()
@@ -10,6 +11,7 @@ repositories {
 dependencies{
     compile group: 'com.sparkjava', name: 'spark-core', version: '2.7.1'
     compile group: 'com.sparkjava', name: 'spark-template-velocity', version: '2.7.1'
+    testCompile 'junit:junit:4.12'
 }
 
 mainClassName = 'Main'
