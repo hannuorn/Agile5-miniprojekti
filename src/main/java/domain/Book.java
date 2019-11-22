@@ -19,11 +19,11 @@ public class Book implements Item {
     @Override
     public String getInfo() {
 
-        return "Kirjoittaja: " + this.author + "\n"
-                + "Otsikko: " + this.title + "\n"
-                + "Tyyppi: " + "kirja" + "\n"
-                + "ISBN: " + this.isbn + "\n"
-                + "Tagit: " + this.tags + "\n"
+        return "Kirjoittaja: " + this.author + "<br/>"
+                + "Otsikko: " + this.title + "<br/>"
+                + "Tyyppi: " + "kirja" + "<br/>"
+                + "ISBN: " + this.isbn + "<br/>"
+                + "Tagit: " + this.tags + "<br/>"
                 + "Kommentti: " + this.description;
     }
 }
