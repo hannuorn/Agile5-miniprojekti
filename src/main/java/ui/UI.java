@@ -27,7 +27,7 @@ public class UI {
     public UI(ItemDAO dao){
         this.dao = dao;
         
-        Book book = new Book("Matti Luukkainen", "Ohjelmistotuonto", "1111BBBBSSSS", "Ohtu", "Testi");
+        Book book = new Book("Matti Luukkainen", "Ohjelmistotuotanto", "1111BBBBSSSS", "Ohtu", "Testi");
         System.out.println(book.getInfo());
         dao.create(book);
         
