@@ -1,4 +1,4 @@
-import dataAccess.ItemsDAO;
+import dataAccess.ItemDAO;
 import domain.Book;
 import ui.UI;
 
@@ -8,9 +8,8 @@ public class Main {
     
     public static void main(String[] args) {
         
-        ItemsDAO dao = new ItemsDAO();
+        ItemDAO dao = new ItemDAO();
         UI ui = new UI(dao);
-        
         
     }
 }

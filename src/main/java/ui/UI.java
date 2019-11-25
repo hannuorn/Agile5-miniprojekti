@@ -5,7 +5,6 @@
  */
 package ui;
 
-import dataAccess.ItemDAO;
 import domain.Book;
 import domain.Item;
 import java.util.ArrayList;
@@ -14,22 +13,23 @@ import java.util.List;
 import spark.ModelAndView;
 import static spark.Spark.*;
 import spark.template.velocity.VelocityTemplateEngine;
+import dataAccess.ItemDAO;
 
 /**
  *
  * @author htomi
  */
 public class UI {
-    private ItemDAO dao;
+    private ItemDAO itemDao;
     static String LAYOUT = "templates/layout.html";
     
     
-    public UI(ItemDAO dao){
-        this.dao = dao;
+    public UI(ItemDAO itemDao){
+        this.itemDao = itemDao;
         
         Book book = new Book("Matti Luukkainen", "Ohjelmistotuotanto", "1111BBBBSSSS", "Ohtu", "Testi");
         System.out.println(book.getInfo());
-        dao.create(book);
+        itemDao.create(book);
         
         get("/", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
@@ -39,7 +39,7 @@ public class UI {
         
         get("/all", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            model.put("list", dao.list());
+            model.put("list", itemDao.list());
             model.put("template", "templates/all.html");
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());  
@@ -59,17 +59,13 @@ public class UI {
             String desc = request.queryParams("description");
             
             Book newBook = new Book(author,title,isbn,tags,desc);
-            dao.create(newBook);
+            itemDao.create(newBook);
             
             response.redirect("/all");
          
            return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
         
-        
-        
     }
-    
-    
     
 }
