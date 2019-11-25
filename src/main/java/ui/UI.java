@@ -1,24 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ui;
 
 import domain.Book;
-import domain.Item;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import spark.ModelAndView;
 import static spark.Spark.*;
 import spark.template.velocity.VelocityTemplateEngine;
 import dataAccess.ItemDAO;
 
-/**
- *
- * @author htomi
- */
 public class UI {
     private ItemDAO itemDao;
     static String LAYOUT = "templates/layout.html";
