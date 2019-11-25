@@ -15,6 +15,10 @@ public class Book implements Item {
         this.tags = tags;
         this.description = description;
     }
+    
+    public String getTitle() {
+        return this.title;
+    }
 
     @Override
     public String getInfo() {
