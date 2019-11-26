@@ -21,8 +21,9 @@ public class HexadecimalGenerator implements IdGenerator{
     
     @Override
     public String getId(){
-        int id = randomizer.nextInt();
-        return Integer.toHexString(id);
+        String firstHalfOfId = Integer.toHexString(randomizer.nextInt());
+        String secondHalfOfId = Integer.toHexString(randomizer.nextInt());
+        return firstHalfOfId + secondHalfOfId;
     }
     
 }
