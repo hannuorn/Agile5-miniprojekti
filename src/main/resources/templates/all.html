@@ -1,11 +1,9 @@
 <h1>Vinkit</h1>
 <ul>
 #foreach($row in $list)
-<li>$row.getInfo()</li>
+<li><a href="/item/$row.getId()">$row.getTitle()</a></li>
 #end
 </ul>
-
-
 <a href="/">Takaisin etusivulle</a><br/>
 <a href="/new">Lisää uusi vinkki</a>
 
