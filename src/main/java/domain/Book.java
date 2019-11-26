@@ -1,19 +1,26 @@
 package domain;
 
 public class Book implements Item {
-
+    
+    
+    private String id;
     private String author;
     private String title;
     private String isbn;
     private String tags;
     private String description;
 
-    public Book(String author, String title, String isbn, String tags, String description) {
+    public Book(String id, String author, String title, String isbn, String tags, String description) {
+        this.id = id;
         this.author = author;
         this.title = title;
         this.isbn = isbn;
         this.tags = tags;
         this.description = description;
+    }
+    
+    public String getId(){
+        return this.id;
     }
     
     public String getTitle() {

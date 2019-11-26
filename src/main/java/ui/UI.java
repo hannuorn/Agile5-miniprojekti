@@ -6,16 +6,20 @@ import spark.ModelAndView;
 import static spark.Spark.*;
 import spark.template.velocity.VelocityTemplateEngine;
 import dataAccess.ItemDAO;
+import domain.IdGenerator;
 
 public class UI {
     private ItemDAO itemDao;
+    private IdGenerator idGenerator;
     static String LAYOUT = "templates/layout.html";
     
     
-    public UI(ItemDAO itemDao){
+    public UI(ItemDAO itemDao, IdGenerator idgenerator){
         this.itemDao = itemDao;
+        this.idGenerator = idgenerator;
         
-        Book book = new Book("Matti Luukkainen", "Ohjelmistotuotanto", "1111BBBBSSSS", "Ohtu", "Testi");
+        
+        Book book = new Book("123A", "Matti Luukkainen", "Ohjelmistotuotanto", "1111BBBBSSSS", "Ohtu", "Testi");
         System.out.println(book.getInfo());
         itemDao.create(book);
         
@@ -46,7 +50,7 @@ public class UI {
             String tags = request.queryParams("tags");
             String desc = request.queryParams("description");
             
-            Book newBook = new Book(author,title,isbn,tags,desc);
+            Book newBook = new Book(idGenerator.getId(), author,title,isbn,tags,desc);
             itemDao.create(newBook);
             
             response.redirect("/all");

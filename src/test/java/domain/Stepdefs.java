@@ -13,7 +13,7 @@ public class Stepdefs {
 
     @Given ("new book with title is added")
     public void bookIsAdded() {
-        book = new Book("Robert Martin", "Clean Code: A Handbook of Agile Software Craftsmanship", "978-0132350884", "Ohjelmointi, design patterns", "TKT20006 Ohjelmistotuotanto");
+        book = new Book("testiId","Robert Martin", "Clean Code: A Handbook of Agile Software Craftsmanship", "978-0132350884", "Ohjelmointi, design patterns", "TKT20006 Ohjelmistotuotanto");
     }
     
     @Then("system returns correct title")

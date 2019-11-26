@@ -1,4 +1,5 @@
 import dataAccess.ItemDAO;
+import domain.HexadecimalGenerator;
 import ui.UI;
 
 public class Main {
@@ -7,6 +8,7 @@ public class Main {
     
     public static void main(String[] args) {
         ItemDAO dao = new ItemDAO();
-        UI ui = new UI(dao);
+        HexadecimalGenerator generator = new HexadecimalGenerator();
+        UI ui = new UI(dao,generator);
     }
 }
