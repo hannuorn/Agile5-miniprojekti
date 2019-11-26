@@ -9,6 +9,7 @@ public class Book implements Item {
     private String isbn;
     private String tags;
     private String description;
+    private boolean read;
 
     public Book(String id, String author, String title, String isbn, String tags, String description) {
         this.id = id;
@@ -17,8 +18,16 @@ public class Book implements Item {
         this.isbn = isbn;
         this.tags = tags;
         this.description = description;
+        this.read = false;
     }
     
+   
+    @Override
+    public boolean isRead(){
+        return this.read;
+    }
+    
+    @Override
     public String getId(){
         return this.id;
     }
