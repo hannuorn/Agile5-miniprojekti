@@ -36,5 +36,10 @@ public class Book implements Item {
                 + "Tagit: " + this.tags + "<br/>"
                 + "Kommentti: " + this.description;
     }
+
+    @Override
+    public Type getType() {
+        return Type.BOOK;
+    }
 }
 
