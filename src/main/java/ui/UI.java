@@ -20,8 +20,10 @@ public class UI {
         this.idGenerator = idgenerator;
 
         Book book = new Book("123A", "Matti Luukkainen", "Ohjelmistotuotanto", "1111BBBBSSSS", "Ohtu", "Testi");
+        Book book2 = new Book("111", "Maija Mallikas", "Testi", "111222", "testi", "TKT10001");
         System.out.println(book.getInfo());
         itemDao.create(book);
+        itemDao.create(book2);
 
         get("/", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
