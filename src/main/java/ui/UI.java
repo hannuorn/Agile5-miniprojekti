@@ -57,6 +57,16 @@ public class UI {
             
         }, new VelocityTemplateEngine());
 
+        post("/item/delete/:id", (request, response) -> {
+            HashMap<String, Object> model = new HashMap<>();
+            String id = request.params(":id");
+            
+            System.out.println("Item id to delete : " + id);
+
+            response.redirect("/all");
+            return new ModelAndView(model, LAYOUT);
+        }, new VelocityTemplateEngine());
+
         get("/new_book", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             model.put("template", "templates/new_book.html");
