@@ -2,7 +2,7 @@ package domain;
 
 public class Link implements Item {
 
-    private String id;
+    private Integer id;
     private String author;
     private String title;
     private String url;
@@ -10,7 +10,7 @@ public class Link implements Item {
     private Boolean read;
     //private String linkType; ??
 
-    public Link(String id, String author, String title, String url, String description) {
+    public Link(String author, String title, String url, String description) {
         this.id = id;
         this.author = author;
         this.title = title;
@@ -27,7 +27,7 @@ public class Link implements Item {
                 + "Kommentti: " + this.description;
     }
 
-    public String getId() {
+    public Integer getId() {
         return this.id;
     }
 

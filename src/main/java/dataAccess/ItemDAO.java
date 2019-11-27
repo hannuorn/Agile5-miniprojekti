@@ -1,19 +1,28 @@
 package dataAccess;
 
 import domain.Item;
+import domain.Book;
+import domain.Type;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemDAO implements DAO<Item, String> {
 
     private ArrayList<Item> items;
+    private BookDAO bookDao;
     
     public ItemDAO(){
         items = new ArrayList<>();
+        bookDao = new BookDAO();
     }
     
     public void create(Item item) {
         items.add(item);
+        if (item.getType() == Type.BOOK) {
+            Book book = (Book) item;
+            bookDao.create(book);
+        }
     }
 
     public List<Item> list() {

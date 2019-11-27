@@ -2,7 +2,7 @@ package domain;
 
 public class Book implements Item {
 
-    private String id;
+    private Integer id;
     private String author;
     private String title;
     private String isbn;
@@ -10,7 +10,7 @@ public class Book implements Item {
     private String description;
     private boolean read;
 
-    public Book(String id, String author, String title, String isbn, String tags, String description) {
+    public Book(String author, String title, String isbn, String tags, String description) {
         this.id = id;
         this.author = author;
         this.title = title;
@@ -24,14 +24,22 @@ public class Book implements Item {
         return this.read;
     }
 
-    public String getId(){
+    public Integer getId(){
         return this.id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getTitle() {
         return this.title;
     }
 
+    public String getAuthor() {
+        return this.author;
+    }
+    
     public String getInfo() {
         return "Kirjoittaja: " + this.author + "<br/>"
                 + "Otsikko: " + this.title + "<br/>"
