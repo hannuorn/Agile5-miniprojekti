@@ -56,13 +56,13 @@ public class UI {
             
         }, new VelocityTemplateEngine());
 
-        get("/new", (request, response) -> {
+        get("/new_book", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            model.put("template", "templates/new.html");
+            model.put("template", "templates/new_book.html");
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
-        post("/new", (request, response) -> {
+        post("/new_book", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             String author = request.queryParams("author");
             String title = request.queryParams("title");
