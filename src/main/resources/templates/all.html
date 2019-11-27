@@ -7,6 +7,9 @@
         #else
         <span class="badge badge-success">Lukematon</span>
         #end
+        <form method="GET" action="/update_book/$row.getId()">
+            <input type="submit" value="Update"/>
+        </form>
     </li>
     #end
 </ul>
