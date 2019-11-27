@@ -1,6 +1,7 @@
 package ui;
 
 import domain.Book;
+import domain.Link;
 import java.util.HashMap;
 import spark.ModelAndView;
 import static spark.Spark.*;
@@ -50,7 +51,7 @@ public class UI {
             }
 
             model.put("searchResult", searchResult);
-            model.put("template", "templates/singleItem.html");
+            model.put("template", "templates/single_item.html");
             
             return new ModelAndView(model, LAYOUT);
             
@@ -78,8 +79,32 @@ public class UI {
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
-        
+        get("/new_link", (request, response) -> {
+            HashMap<String, Object> model = new HashMap<>();
+            model.put("template", "templates/new_link.html");
+            return new ModelAndView(model, LAYOUT);
+        }, new VelocityTemplateEngine());
 
+        post("/new_link", (request, response) -> {
+            HashMap<String, Object> model = new HashMap<>();
+            String author = request.queryParams("author");
+            String title = request.queryParams("title");
+            String url = request.queryParams("url");
+            String desc = request.queryParams("description");
+
+            Link newLink = new Link(idGenerator.getId(), author, title, url, desc);
+            itemDao.create(newLink);
+
+            response.redirect("/all");
+
+            return new ModelAndView(model, LAYOUT);
+        }, new VelocityTemplateEngine());
+
+        get("/choose_item_type", (request, response) -> {
+            HashMap<String, Object> model = new HashMap<>();
+            model.put("template", "templates/choose_item_type.html");
+            return new ModelAndView(model, LAYOUT);
+        }, new VelocityTemplateEngine());
     }
 
 }

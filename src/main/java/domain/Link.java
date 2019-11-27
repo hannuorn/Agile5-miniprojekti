@@ -16,6 +16,7 @@ public class Link implements Item {
         this.title = title;
         this.url = url;
         this.description = description;
+        this.read = false;
     }
 
     @Override
