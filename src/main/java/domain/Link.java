@@ -23,7 +23,7 @@ public class Link implements Item {
     public String getInfo() {
         return "Kirjoittaja: " + this.author + "<br/>"
                 + "Otsikko: " + this.title + "<br/>"
-                + "Tyyppi: " + "linkki" + "<br/>"
+                + "Tyyppi: " + "Linkki" + "<br/>"
                 + "URL: " + this.url + "<br/>"
                 + "Kommentti: " + this.description;
     }

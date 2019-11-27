@@ -41,7 +41,7 @@ public class Book implements Item {
     public String getInfo() {
         return "Kirjoittaja: " + this.author + "<br/>"
                 + "Otsikko: " + this.title + "<br/>"
-                + "Tyyppi: " + "kirja" + "<br/>"
+                + "Tyyppi: " + "Kirja" + "<br/>"
                 + "ISBN: " + this.isbn + "<br/>"
                 + "Tagit: " + this.tags + "<br/>"
                 + "Kommentti: " + this.description;

@@ -12,7 +12,7 @@ public class BookTest {
         String string = book.getInfo();
         String expected = "Kirjoittaja: Robert Martin" + "<br/>"
                 + "Otsikko: Clean Code: A Handbook of Agile Software Craftsmanship" + "<br/>"
-                + "Tyyppi: " + "kirja" + "<br/>"
+                + "Tyyppi: " + "Kirja" + "<br/>"
                 + "ISBN: 978-0132350884" + "<br/>"
                 + "Tagit: Ohjelmointi, design patterns" + "<br/>"
                 + "Kommentti: TKT20006 Ohjelmistotuotanto";
