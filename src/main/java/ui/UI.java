@@ -60,9 +60,8 @@ public class UI {
         post("/item/delete/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             String id = request.params(":id");
-            
-            System.out.println("Item id to delete : " + id);
 
+            itemDao.remove(id);
             response.redirect("/all");
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());

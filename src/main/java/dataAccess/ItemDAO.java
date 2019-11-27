@@ -19,6 +19,16 @@ public class ItemDAO implements DAO<Item, String> {
     public List<Item> list() {
         return items;
     }
+
+    public boolean remove(String id) {
+        for(int i = 0; i < items.size(); i++) {
+            if(items.get(i).getId().equals(id)) {
+                this.items.remove(i);
+                return true;
+            }    
+        }
+        return false;   
+    }
     
     @Override
     public Item read(String id){
