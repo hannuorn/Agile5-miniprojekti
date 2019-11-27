@@ -4,3 +4,10 @@
 # Ignore Gradle build output directory
 build
 /.nb-gradle/
+
+# Visual Studio Code
+.classpath
+.project
+.settings/
+.vscode/
+bin/
