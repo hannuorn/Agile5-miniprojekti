@@ -32,6 +32,7 @@ public class Book implements Item {
         return this.id;
     }
     
+    @Override
     public String getTitle() {
         return this.title;
     }
