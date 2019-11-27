@@ -32,14 +32,18 @@ public class Book implements Item {
         this.id = id;
     }
 
-    public String getTitle() {
-        return this.title;
-    }
-
     public String getAuthor() {
         return this.author;
     }
     
+    public String getTitle() {
+        return this.title;
+    }
+    
+    public String getIsbn() {
+        return this.isbn;
+    }
+
     public String getInfo() {
         return "Kirjoittaja: " + this.author + "<br/>"
                 + "Otsikko: " + this.title + "<br/>"

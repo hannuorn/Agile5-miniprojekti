@@ -11,6 +11,26 @@ public class DB {
     private static URI dbUri;
     public static Sql2o sql2o;
     public static Logger logger = LoggerFactory.getLogger(DB.class);
+
+    static void executeQuery(String sql) {
+        try (Connection con = DB.sql2o.open()) {
+            con.createQuery(sql).executeUpdate();
+        }
+    }
+    
+    static void createTables() {
+        String sql = 
+            "DROP TABLE book;";
+        executeQuery(sql);
+        
+        sql = 
+            "CREATE TABLE book(" +
+                "id SERIAL PRIMARY KEY, " +
+                "author VARCHAR(40)," +
+                "title VARCHAR(40)," +
+                "isbn VARCHAR(40));";
+        executeQuery(sql);
+    }
     
     static {
 
@@ -26,8 +46,10 @@ public class DB {
             String username = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[0];
             String password = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[1];
             sql2o = new Sql2o("jdbc:postgresql://" + host + ":" + port + path, username, password);
+            createTables();
         } catch (URISyntaxException e ) { 
             logger.error("Unable to connect to database.");
         }
     }
+    
 }

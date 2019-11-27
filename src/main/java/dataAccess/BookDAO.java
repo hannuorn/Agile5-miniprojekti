@@ -21,6 +21,7 @@ public class BookDAO implements DAO<Book, Integer> {
             Integer key = con.createQuery(sql, true)
                 .addParameter("author", book.getAuthor())
                 .addParameter("title", book.getTitle())
+                .addParameter("isbn", book.getIsbn())
                 .executeUpdate()
                 .getKey(Integer.class);
             book.setId(key);
@@ -29,6 +30,8 @@ public class BookDAO implements DAO<Book, Integer> {
 
     @Override
     public List<Book> list() {
+        String sql =
+            "SELECT author, title, isbn FROM Book;";
         return null;
     }
 
