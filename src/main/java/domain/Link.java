@@ -1,7 +1,7 @@
 package domain;
 
 public class Link implements Item {
-    
+
     private String id;
     private String author;
     private String title;
@@ -19,7 +19,6 @@ public class Link implements Item {
         this.read = false;
     }
 
-    @Override
     public String getInfo() {
         return "Kirjoittaja: " + this.author + "<br/>"
                 + "Otsikko: " + this.title + "<br/>"
@@ -28,24 +27,19 @@ public class Link implements Item {
                 + "Kommentti: " + this.description;
     }
 
-    @Override
     public String getId() {
         return this.id;
     }
-    
-    @Override
+
     public String getTitle() {
         return this.title;
     }
 
-    @Override
     public boolean isRead() {
         return this.read;
     }
 
-    @Override
     public Type getType() {
         return Type.LINK;
     }
-    
 }

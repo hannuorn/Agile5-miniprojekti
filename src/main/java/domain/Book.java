@@ -1,8 +1,7 @@
 package domain;
 
 public class Book implements Item {
-    
-    
+
     private String id;
     private String author;
     private String title;
@@ -20,24 +19,19 @@ public class Book implements Item {
         this.description = description;
         this.read = false;
     }
-    
-   
-    @Override
+
     public boolean isRead(){
         return this.read;
     }
-    
-    @Override
+
     public String getId(){
         return this.id;
     }
-    
-    @Override
+
     public String getTitle() {
         return this.title;
     }
 
-    @Override
     public String getInfo() {
         return "Kirjoittaja: " + this.author + "<br/>"
                 + "Otsikko: " + this.title + "<br/>"
@@ -47,9 +41,7 @@ public class Book implements Item {
                 + "Kommentti: " + this.description;
     }
 
-    @Override
     public Type getType() {
         return Type.BOOK;
     }
 }
-
