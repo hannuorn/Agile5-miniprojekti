@@ -6,6 +6,7 @@ package dataAccess;
  */
 
 import domain.Item;
+import domain.ItemType;
 import domain.Link;
 import java.util.List;
 import org.sql2o.*;
@@ -18,11 +19,12 @@ public class LinkDAO implements DAO<Link, Integer> {
     @Override
     public void create(Link link) {
         String sql =
-            "INSERT INTO Item (author, title, url, description) " +
-            "VALUES (:author, :title, :url, :description);";
+            "INSERT INTO Item (type, author, title, url, description) " +
+            "VALUES (:type, :author, :title, :url, :description);";
 
         try (Connection con = DB.sql2o.open()) {
             Integer key = con.createQuery(sql, true)
+                .addParameter("type", ItemType.itemTypeToInteger(ItemType.BOOK))
                 .addParameter("author", link.getAuthor())
                 .addParameter("title", link.getTitle())
                 .addParameter("url", link.getUrl())
