@@ -2,6 +2,7 @@ package dataAccess;
 
 import domain.Item;
 import domain.Book;
+import domain.ItemType;
 import java.util.ArrayList;
 import java.util.List;
 import org.sql2o.*;
@@ -14,11 +15,12 @@ public class BookDAO implements DAO<Book, Integer> {
     @Override
     public void create(Book book) {
         String sql =
-            "INSERT INTO Item (author, title, isbn, tags, description) " +
-            "VALUES (:author, :title, :isbn, :tags, :description);";
+            "INSERT INTO Item (type, author, title, isbn, tags, description) " +
+            "VALUES (:type, :author, :title, :isbn, :tags, :description);";
 
         try (Connection con = DB.sql2o.open()) {
             Integer key = con.createQuery(sql, true)
+                .addParameter("type", ItemType.itemTypeToInteger(ItemType.BOOK))
                 .addParameter("author", book.getAuthor())
                 .addParameter("title", book.getTitle())
                 .addParameter("isbn", book.getIsbn())
