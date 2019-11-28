@@ -24,7 +24,7 @@ public class LinkDAO implements DAO<Link, Integer> {
 
         try (Connection con = DB.sql2o.open()) {
             Integer key = con.createQuery(sql, true)
-                .addParameter("type", ItemType.itemTypeToInteger(ItemType.BOOK))
+                .addParameter("type", ItemType.itemTypeToInteger(ItemType.LINK))
                 .addParameter("author", link.getAuthor())
                 .addParameter("title", link.getTitle())
                 .addParameter("url", link.getUrl())
