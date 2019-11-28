@@ -6,17 +6,17 @@ import java.util.HashMap;
 import spark.ModelAndView;
 import static spark.Spark.*;
 import spark.template.velocity.VelocityTemplateEngine;
-import dataAccess.ItemDAO;
+import dataAccess.DAO;
 import domain.IdGenerator;
 import domain.Item;
 
 public class UI {
 
-    private ItemDAO itemDao;
+    private DAO<Item, Integer> itemDao;
     private IdGenerator idGenerator;
     static String LAYOUT = "templates/layout.html";
 
-    public UI(ItemDAO itemDao, IdGenerator idgenerator) {
+    public UI(DAO<Item, Integer> itemDao, IdGenerator idgenerator) {
         this.itemDao = itemDao;
         this.idGenerator = idgenerator;
 
@@ -42,13 +42,13 @@ public class UI {
         get("/item/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             
-            String id = request.params(":id");
+            Integer id = Integer.parseInt(request.params(":id"));
             
             Item searchResult = itemDao.read(id);
             
             if (searchResult == null) {
                 response.redirect("/all");
-            }
+            } 
 
             model.put("searchResult", searchResult);
             model.put("template", "templates/single_item.html");
@@ -59,7 +59,7 @@ public class UI {
 
         post("/item/delete/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            String id = request.params(":id");
+            int id = Integer.parseInt(request.params(":id"));
 
             itemDao.remove(id);
             response.redirect("/all");
@@ -91,7 +91,7 @@ public class UI {
         get("/update_book/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             
-            String id = request.params(":id");
+            int id = Integer.parseInt(request.params(":id"));
             
             Item searchResult = itemDao.read(id);
             
@@ -145,7 +145,7 @@ public class UI {
         get("/update_link/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             
-            String id = request.params(":id");
+            int id = Integer.parseInt(request.params(":id"));
             
             Item searchResult = itemDao.read(id);
             

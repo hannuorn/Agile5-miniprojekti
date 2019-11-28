@@ -43,6 +43,14 @@ public class Book implements Item {
     public String getIsbn() {
         return this.isbn;
     }
+    
+    public String getTags() {
+        return this.tags;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
 
     public String getInfo() {
         return "Kirjoittaja: " + this.author + "<br/>"
@@ -53,7 +61,7 @@ public class Book implements Item {
                 + "Kommentti: " + this.description;
     }
 
-    public Type getType() {
-        return Type.BOOK;
+    public ItemType getType() {
+        return ItemType.BOOK;
     }
 }

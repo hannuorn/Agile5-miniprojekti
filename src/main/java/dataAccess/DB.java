@@ -1,5 +1,6 @@
 package dataAccess;
 
+import domain.Item;
 import org.sql2o.*;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 public class DB {
 
+    public static DAO<Item, Integer> itemDao;
     private static URI dbUri;
     public static Sql2o sql2o;
     public static Logger logger = LoggerFactory.getLogger(DB.class);
@@ -37,8 +39,10 @@ public class DB {
         try {
             if (System.getenv("DATABASE_URL") == null) {
                 dbUri = new URI("postgres://localhost:5432/vinkkikirjasto");
+                itemDao = new MemoryItemDAO();
             } else {
                 dbUri = new URI(System.getenv("DATABASE_URL"));
+                itemDao = new SQLItemDAO();
             }
             int port = dbUri.getPort();
             String host = dbUri.getHost();

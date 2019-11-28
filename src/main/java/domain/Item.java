@@ -1,9 +1,15 @@
 package domain;
 
 public interface Item {
-    public String getInfo();     
+    
+    public String getInfo(); 
+    
     public Integer getId();
+    
     public String getTitle();
+    
     public boolean isRead();
-    public Type getType();
+    
+    public ItemType getType();
+    
 }

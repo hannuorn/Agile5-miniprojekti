@@ -14,14 +14,16 @@ public class BookDAO implements DAO<Book, Integer> {
     @Override
     public void create(Book book) {
         String sql =
-            "INSERT INTO Book (author, title, isbn) " +
-            "VALUES (:author, :title, :isbn);";
+            "INSERT INTO Item (author, title, isbn, tags, description) " +
+            "VALUES (:author, :title, :isbn, :tags, :description);";
 
         try (Connection con = DB.sql2o.open()) {
             Integer key = con.createQuery(sql, true)
                 .addParameter("author", book.getAuthor())
                 .addParameter("title", book.getTitle())
                 .addParameter("isbn", book.getIsbn())
+                .addParameter("tags", book.getTags())
+                .addParameter("description", book.getDescription())
                 .executeUpdate()
                 .getKey(Integer.class);
             book.setId(key);
@@ -32,7 +34,10 @@ public class BookDAO implements DAO<Book, Integer> {
     public List<Book> list() {
         String sql =
             "SELECT author, title, isbn FROM Book;";
-        return null;
+        
+        try (Connection con = DB.sql2o.open()) {
+            return con.createQuery(sql).executeAndFetch(Book.class);
+        }
     }
 
     @Override
@@ -41,7 +46,17 @@ public class BookDAO implements DAO<Book, Integer> {
     }
     
     @Override
-    public Book read(Integer id){
+    public Book read(Integer id) {
+        /*
+        String sql =
+            "SELECT * FROM Item " +
+            "WHERE id = :id;";
+        try (Connection con = DB.sql2o.open()) {
+            con.createQuery(sql)
+                .addParameter("author", Integer.toString(id))
+                .executeUpdate();
+        }
+*/
         return null;
     }
 }

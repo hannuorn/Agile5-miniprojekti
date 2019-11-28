@@ -28,6 +28,6 @@ public class LinkTest {
     
     @Test
     public void linkHasCorrectType() {
-        assertEquals(Type.LINK, link.getType());
+        assertEquals(ItemType.LINK, link.getType());
     }
 }

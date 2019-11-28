@@ -24,6 +24,6 @@ public class BookTest {
     public void bookHasCorrectType() {
         Book book = new Book("Robert Martin", "Clean Code: A Handbook of Agile Software Craftsmanship", "978-0132350884", "Ohjelmointi, design patterns", "TKT20006 Ohjelmistotuotanto");
 
-        assertEquals(Type.BOOK, book.getType());        
+        assertEquals(ItemType.BOOK, book.getType());        
     }
 }

@@ -31,15 +31,31 @@ public class Link implements Item {
         return this.id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
     public String getTitle() {
         return this.title;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+    
     public boolean isRead() {
         return this.read;
     }
 
-    public Type getType() {
-        return Type.LINK;
+    public ItemType getType() {
+        return ItemType.LINK;
     }
 }
