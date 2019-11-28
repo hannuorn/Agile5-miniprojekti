@@ -16,10 +16,18 @@
             #end
         </div>
         <div class="p-2">
-            <form method="GET" action="/update_book/$searchResult.getId()">
+            <form method="GET" action="/update/$searchResult.getType().itemTypeToInteger($searchResult.getType())/$searchResult.getId()">
                 <input type="submit" class="btn btn-primary" value="Muokkaa" />
+            </form>
+        </div>
+        <div class="p-2">
+            <form method="POST" action="/item/delete/$searchResult.getId()">
+                <input type="submit" class="btn btn-danger" value="Poista" />
             </form>
         </div>
     </div>
     <p>$searchResult.getInfo()</p>
+    <a href="/">Takaisin etusivulle</a><br/>
+    <a href="/all">Kaikkien vinkkien lista</a>
 </main>
+
