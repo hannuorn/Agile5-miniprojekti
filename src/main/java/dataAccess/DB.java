@@ -28,6 +28,7 @@ public class DB {
         sql = 
             "CREATE TABLE Item(" +
                 "id SERIAL PRIMARY KEY, " +
+                "type VARCHAR(20)," +
                 "read BOOLEAN," +
                 "author VARCHAR(40)," +
                 "title VARCHAR(40)," +
