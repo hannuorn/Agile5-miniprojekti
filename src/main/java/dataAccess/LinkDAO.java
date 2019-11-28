@@ -57,6 +57,25 @@ public class LinkDAO implements DAO<Link, Integer> {
     
     @Override
     public boolean update(Link link) {
-        return false;
+        String sql =
+            "UPDATE Item SET " +
+            "author = ':author', " +
+            "title = ':title', " +
+            "url = ':url', " +
+            "description = ':description', " + 
+            "read = ':read' " +
+            "WHERE (id = :id);";
+        
+        try (Connection con = DB.sql2o.open()) {
+            con.createQuery(sql)
+                .addParameter("id", link.getId())
+                .addParameter("author", link.getAuthor())
+                .addParameter("title", link.getTitle())
+                .addParameter("url", link.getUrl())
+                .addParameter("description", link.getDescription())
+                .addParameter("read", link.isRead())
+                .executeUpdate();
+        }
+        return true;
     }
 }
