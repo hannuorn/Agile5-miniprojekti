@@ -84,7 +84,7 @@ public class UI {
             
             String id = request.params(":id");
             
-            Item searchResult = itemDao.read(id);
+            Book searchResult = (Book) itemDao.read(id);
             
             if (searchResult == null) {
                 response.redirect("/all");
