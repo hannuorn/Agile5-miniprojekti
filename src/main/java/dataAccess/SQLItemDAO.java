@@ -107,4 +107,12 @@ public class SQLItemDAO implements DAO<Item, Integer> {
         }
         return item;
     }
+    
+    public boolean update(Item item) {
+        switch (item.getType()) {
+            case BOOK:      return bookDao.update((Book) item);
+            case LINK:      return linkDao.update((Link) item);
+        }
+        return false;
+    }
 }

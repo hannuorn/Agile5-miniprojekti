@@ -6,11 +6,11 @@
         </div>
         <div class="p-2">
             #if($searchResult.isRead())
-            <form>
+            <form method="POST" action="/changeReadStatus/$searchResult.getId()">
                 <input type="submit" class="btn btn-primary" value="Merkitse Lukemattomaksi" />
             </form>
             #else
-            <form>
+            <form method="POST" action="/changeReadStatus/$searchResult.getId()">
                 <input type="submit" class="btn btn-success" value="Merkitse Luetuksi" />
             </form>
             #end

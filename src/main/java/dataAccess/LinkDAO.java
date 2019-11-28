@@ -54,4 +54,9 @@ public class LinkDAO implements DAO<Link, Integer> {
     public Link read(Integer id){
         return null;
     }
+    
+    @Override
+    public boolean update(Link link) {
+        return false;
+    }
 }

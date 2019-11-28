@@ -55,11 +55,21 @@ public class MemoryItemDAO implements DAO<Item, Integer> {
         return null;
     }
 
-    public void update(Item i) {
-        if (remove(i.getId())) {
-            create(i);
+    @Override
+    public boolean update(Item item) {
+
+        if (read(item.getId()) == null) {
+            return false;
         }
-        
-       
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getId().equals(item.getId())) {
+      
+                items.set(i, item);
+            }
+
+        }
+
+        return true;
     }
+
 }

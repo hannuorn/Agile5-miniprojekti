@@ -88,4 +88,8 @@ public class Link implements Item {
     public void setRead(Boolean read) {
         this.read = read;
     }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

@@ -55,6 +55,30 @@ public class Book implements Item {
         return this.description;
     }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setRead(boolean read) {
+        this.read = read;
+    }
+
     @Override
     public String getInfo() {
         return "Kirjoittaja: " + this.author + "<br/>"
@@ -68,5 +92,10 @@ public class Book implements Item {
     @Override
     public ItemType getType() {
         return ItemType.BOOK;
+    }
+    
+    @Override
+    public void changeRead(){
+        this.read = !this.read;
     }
 }
