@@ -61,4 +61,18 @@ public class BookDAO implements DAO<Book, Integer> {
 */
         return null;
     }
+
+    @Override
+    public boolean update(Book book) {
+        String sql =
+            "UPDATE Item SET " +
+            "author = ':author', " +
+            "title = ':title', " +
+            "isbn = ':isbn', " +
+            "tags = ':tags', " +
+            "description = ':description', " + 
+            "read = ':read' " +
+            "WHERE (id = :id);";
+        return false;
+    }
 }

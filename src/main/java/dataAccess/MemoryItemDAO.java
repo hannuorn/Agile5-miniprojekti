@@ -50,4 +50,9 @@ public class MemoryItemDAO implements DAO<Item, Integer> {
         }
         return null;
     }
+    
+    @Override
+    public boolean update(Item item) {
+        return false;
+    }
 }
