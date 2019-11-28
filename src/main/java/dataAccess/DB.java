@@ -12,7 +12,7 @@ public class DB {
     public static DAO<Item, Integer> itemDao;
     private static URI dbUri;
     public static Sql2o sql2o;
-    public static Logger logger = LoggerFactory.getLogger(DB.class);
+    public static final Logger logger = LoggerFactory.getLogger(DB.class);
 
     static void executeQuery(String sql) {
         try (Connection con = DB.sql2o.open()) {
@@ -44,18 +44,19 @@ public class DB {
         try {
             if (System.getenv("DATABASE_URL") == null) {
                 dbUri = new URI("postgres://localhost:5432/vinkkikirjasto");
-                itemDao = new MemoryItemDAO();
+                itemDao = new SQLItemDAO();
+//                itemDao = new MemoryItemDAO();
             } else {
                 dbUri = new URI(System.getenv("DATABASE_URL"));
                 itemDao = new SQLItemDAO();
             }
-            int port = dbUri.getPort();
-            String host = dbUri.getHost();
-            String path = dbUri.getPath();
-            String username = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[0];
-            String password = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[1];
+            final int port = dbUri.getPort();
+            final String host = dbUri.getHost();
+            final String path = dbUri.getPath();
+            final String username = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[0];
+            final String password = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[1];
             sql2o = new Sql2o("jdbc:postgresql://" + host + ":" + port + path, username, password);
-            createTables();
+//            createTables();
         } catch (URISyntaxException e ) { 
             logger.error("Unable to connect to database.");
         }
