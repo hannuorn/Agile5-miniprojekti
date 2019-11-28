@@ -19,6 +19,7 @@ public class Link implements Item {
         this.read = false;
     }
 
+    @Override
     public String getInfo() {
         return "Kirjoittaja: " + this.author + "<br/>"
                 + "Otsikko: " + this.title + "<br/>"
@@ -27,6 +28,7 @@ public class Link implements Item {
                 + "Kommentti: " + this.description;
     }
 
+    @Override
     public Integer getId() {
         return this.id;
     }
@@ -39,6 +41,7 @@ public class Link implements Item {
         return author;
     }
 
+    @Override
     public String getTitle() {
         return this.title;
     }
@@ -51,10 +54,12 @@ public class Link implements Item {
         return description;
     }
     
+    @Override
     public boolean isRead() {
         return this.read;
     }
 
+    @Override
     public ItemType getType() {
         return ItemType.LINK;
     }
