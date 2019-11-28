@@ -69,20 +69,4 @@ public class Book implements Item {
     public ItemType getType() {
         return ItemType.BOOK;
     }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public String getTags() {
-        return tags;
-    }
-
-    public String getDescription() {
-        return description;
-    }
 }
