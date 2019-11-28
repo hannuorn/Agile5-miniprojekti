@@ -135,7 +135,7 @@ public class UI {
             searchResult.setTags(tags);
             searchResult.setDescription(desc);
             
-            //TÄHÄN DAON UPDATE!!!!!
+            itemDao.update((Item) searchResult);
 
             response.redirect("/all");
 
@@ -206,7 +206,7 @@ public class UI {
             searchResult.setUrl(url);
             searchResult.setDescription(desc);
             
-            //TÄHÄN DAON UPDATE!!!!!
+            itemDao.update((Item) searchResult);
            
             response.redirect("/all");
 

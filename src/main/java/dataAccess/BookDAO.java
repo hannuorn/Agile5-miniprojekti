@@ -73,6 +73,18 @@ public class BookDAO implements DAO<Book, Integer> {
             "description = ':description', " + 
             "read = ':read' " +
             "WHERE (id = :id);";
-        return false;
+        
+        try (Connection con = DB.sql2o.open()) {
+            con.createQuery(sql, true)
+                .addParameter("id", book.getId())
+                .addParameter("author", book.getAuthor())
+                .addParameter("title", book.getTitle())
+                .addParameter("isbn", book.getIsbn())
+                .addParameter("tags", book.getTags())
+                .addParameter("description", book.getDescription())
+                .addParameter("read", book.isRead())
+                .executeUpdate();
+        }
+        return true;
     }
 }
