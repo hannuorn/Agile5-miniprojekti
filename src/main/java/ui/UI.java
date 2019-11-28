@@ -134,13 +134,14 @@ public class UI {
 
         post("/new_link", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            /*String author = request.queryParams("author");
+            
+            String author = request.queryParams("author");
             String title = request.queryParams("title");
             String url = request.queryParams("url");
             String desc = request.queryParams("description");
 
             Link newLink = new Link(author, title, url, desc);
-            itemDao.create(newLink);*/
+            itemDao.create(newLink);
 
             response.redirect("/all");
 
