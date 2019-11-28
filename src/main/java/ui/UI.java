@@ -103,6 +103,7 @@ public class UI {
                 response.redirect("/all");
             }
             
+            System.out.println(searchResult.getAuthor());
             model.put("searchResult", searchResult);
             model.put("author", searchResult.getAuthor());
             model.put("title", searchResult.getTitle());
