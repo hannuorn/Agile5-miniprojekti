@@ -102,12 +102,6 @@ public class UI {
             if (searchResult == null) {
                 response.redirect("/all");
             }
-<<<<<<< HEAD
-            
-            System.out.println(searchResult.getAuthor());
-=======
-
->>>>>>> f1987ef120fb1eb5d0596908dffec361a5bf0a73
             model.put("searchResult", searchResult);
             model.put("author", searchResult.getAuthor());
             model.put("title", searchResult.getTitle());
