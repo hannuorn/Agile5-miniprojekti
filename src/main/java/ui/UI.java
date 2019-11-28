@@ -6,22 +6,22 @@ import java.util.HashMap;
 import spark.ModelAndView;
 import static spark.Spark.*;
 import spark.template.velocity.VelocityTemplateEngine;
-import dataAccess.ItemDAO;
+import dataAccess.DAO;
 import domain.IdGenerator;
 import domain.Item;
 
 public class UI {
 
-    private ItemDAO itemDao;
+    private DAO<Item, Integer> itemDao;
     private IdGenerator idGenerator;
     static String LAYOUT = "templates/layout.html";
 
-    public UI(ItemDAO itemDao, IdGenerator idgenerator) {
+    public UI(DAO<Item, Integer> itemDao, IdGenerator idgenerator) {
         this.itemDao = itemDao;
         this.idGenerator = idgenerator;
 
-        Book book = new Book("123A", "Matti Luukkainen", "Ohjelmistotuotanto", "1111BBBBSSSS", "Ohtu", "Testi");
-        Book book2 = new Book("111", "Maija Mallikas", "Testi", "111222", "testi", "TKT10001");
+        Book book = new Book("Matti Luukkainen", "Ohjelmistotuotanto", "1111BBBBSSSS", "Ohtu", "Testi");
+        Book book2 = new Book("Maija Mallikas", "Testi", "111222", "testi", "TKT10001");
         System.out.println(book.getInfo());
         itemDao.create(book);
         itemDao.create(book2);
@@ -42,19 +42,28 @@ public class UI {
         get("/item/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             
-            String id = request.params(":id");
+            Integer id = Integer.parseInt(request.params(":id"));
             
             Item searchResult = itemDao.read(id);
             
             if (searchResult == null) {
                 response.redirect("/all");
-            }
+            } 
 
             model.put("searchResult", searchResult);
             model.put("template", "templates/single_item.html");
             
             return new ModelAndView(model, LAYOUT);
             
+        }, new VelocityTemplateEngine());
+
+        post("/item/delete/:id", (request, response) -> {
+            HashMap<String, Object> model = new HashMap<>();
+            int id = Integer.parseInt(request.params(":id"));
+
+            itemDao.remove(id);
+            response.redirect("/all");
+            return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
         get("/new_book", (request, response) -> {
@@ -71,7 +80,7 @@ public class UI {
             String tags = request.queryParams("tags");
             String desc = request.queryParams("description");
 
-            Book newBook = new Book(idGenerator.getId(), author, title, isbn, tags, desc);
+            Book newBook = new Book(author, title, isbn, tags, desc);
             itemDao.create(newBook);
 
             response.redirect("/all");
@@ -82,7 +91,7 @@ public class UI {
         get("/update_book/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             
-            String id = request.params(":id");
+            int id = Integer.parseInt(request.params(":id"));
             
             Book searchResult = (Book) itemDao.read(id);
             
@@ -125,7 +134,7 @@ public class UI {
             String url = request.queryParams("url");
             String desc = request.queryParams("description");
 
-            Link newLink = new Link(idGenerator.getId(), author, title, url, desc);
+            Link newLink = new Link(author, title, url, desc);
             itemDao.create(newLink);
 
             response.redirect("/all");
@@ -136,7 +145,7 @@ public class UI {
         get("/update_link/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             
-            String id = request.params(":id");
+            int id = Integer.parseInt(request.params(":id"));
             
             Item searchResult = itemDao.read(id);
             

@@ -10,7 +10,7 @@ public class LinkTest {
     
     @Before
     public void setUp() {
-        link = new Link("98", "Nicola Apicella", "Consistency models", "https://dev.to/napicellatwit/consistency-models-52l", "Hieno ohje.");
+        link = new Link("Nicola Apicella", "Consistency models", "https://dev.to/napicellatwit/consistency-models-52l", "Hieno ohje.");
     }
     
     @Test
@@ -28,6 +28,6 @@ public class LinkTest {
     
     @Test
     public void linkHasCorrectType() {
-        assertEquals(Type.LINK, link.getType());
+        assertEquals(ItemType.LINK, link.getType());
     }
 }

@@ -11,17 +11,20 @@ repositories {
 dependencies{
     compile group: 'com.sparkjava', name: 'spark-core', version: '2.7.1'
     compile group: 'com.sparkjava', name: 'spark-template-velocity', version: '2.7.1'
+    compile group: 'postgresql', name: 'postgresql-jdbc42', version: '9.4.1208-atlassian-hosted'
+    compile 'org.slf4j:slf4j-simple:1.7.21' 
+    compile 'org.sql2o:sql2o:1.5.4' 
     testCompile 'junit:junit:4.12'
     testCompile 'io.cucumber:cucumber-java:4.7.4'
     testCompile 'io.cucumber:cucumber-junit:4.7.4'
 }
 
+applicationName = 'vinkkikirjasto'
 mainClassName = 'Main'
+task stage(dependsOn: ['clean', 'installDist'])
 
 jar {
     manifest {
         attributes 'Main-Class': 'Main'
     }
 }
-
-
