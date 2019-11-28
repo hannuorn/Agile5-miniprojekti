@@ -88,7 +88,7 @@ public class UI {
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
         
-        get("/update_book/:id", (request, response) -> {
+        get("/update/1/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             
             int id = Integer.parseInt(request.params(":id"));
@@ -100,11 +100,16 @@ public class UI {
             }
             
             model.put("searchResult", searchResult);
+            model.put("author", searchResult.getAuthor());
+            model.put("title", searchResult.getTitle());
+            model.put("isbn", searchResult.getIsbn());
+            model.put("tags", searchResult.getTags());
+            model.put("description", searchResult.getDescription());
             model.put("template", "templates/update_book.html");
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
-        post("/update_book/:id", (request, response) -> {
+        post("/update/1/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             /*String author = request.queryParams("author");
             String title = request.queryParams("title");
@@ -129,36 +134,40 @@ public class UI {
 
         post("/new_link", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            String author = request.queryParams("author");
+            /*String author = request.queryParams("author");
             String title = request.queryParams("title");
             String url = request.queryParams("url");
             String desc = request.queryParams("description");
 
             Link newLink = new Link(author, title, url, desc);
-            itemDao.create(newLink);
+            itemDao.create(newLink);*/
 
             response.redirect("/all");
 
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
         
-        get("/update_link/:id", (request, response) -> {
+        get("/update/2/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             
             int id = Integer.parseInt(request.params(":id"));
             
-            Item searchResult = itemDao.read(id);
+            Link searchResult = (Link) itemDao.read(id);
             
             if (searchResult == null) {
                 response.redirect("/all");
             }
             
             model.put("searchResult", searchResult);
+            model.put("author", searchResult.getAuthor());
+            model.put("title", searchResult.getTitle());
+            model.put("url", searchResult.getUrl());
+            model.put("description", searchResult.getDescription());
             model.put("template", "templates/update_link.html");
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
-        post("/update_link/:id", (request, response) -> {
+        post("/update/2/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
            
             response.redirect("/all");

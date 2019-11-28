@@ -1,7 +1,7 @@
 <p>$searchResult.getInfo()</p>
 
 <br/>
-<form method="GET" action="/update_book/$searchResult.getId()">
+<form method="GET" action="/update/$searchResult.getType().itemTypeToInteger($searchResult.getType())/$searchResult.getId()">
     <input type="submit" value="Muokkaa"/>
 </form>
 <form method="POST" action="/item/delete/$searchResult.getId()">
