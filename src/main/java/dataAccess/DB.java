@@ -22,15 +22,19 @@ public class DB {
     
     static void createTables() {
         String sql = 
-            "DROP TABLE book;";
+            "DROP TABLE Item;";
         executeQuery(sql);
         
         sql = 
-            "CREATE TABLE book(" +
+            "CREATE TABLE Item(" +
                 "id SERIAL PRIMARY KEY, " +
+                "read BOOLEAN," +
                 "author VARCHAR(40)," +
                 "title VARCHAR(40)," +
-                "isbn VARCHAR(40));";
+                "isbn VARCHAR(40)," +
+                "tags VARCHAR(40)," +
+                "description VARCHAR(40)," +
+                "url VARCHAR(40));";
         executeQuery(sql);
     }
     
