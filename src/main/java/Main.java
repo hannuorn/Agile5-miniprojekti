@@ -1,4 +1,6 @@
+import dataAccess.BookDAO;
 import dataAccess.DAO;
+import dataAccess.LinkDAO;
 import dataAccess.SQLItemDAO;
 import dataAccess.MemoryItemDAO;
 import domain.HexadecimalGenerator;
@@ -11,6 +13,9 @@ public class Main {
     public static void main(String[] args) {
         ProcessBuilder process = new ProcessBuilder();
         Integer port;
+        
+        BookDAO bookDAO = new BookDAO();
+        LinkDAO linkDAO = new LinkDAO();
 
         // This tells our app that if Heroku sets a port for us, we need to use that port.
         // Otherwise, if they do not, continue using port 4567.
@@ -29,6 +34,6 @@ public class Main {
 
         staticFiles.location("/public");
         HexadecimalGenerator generator = new HexadecimalGenerator();
-        UI ui = new UI(dao, generator);
+        UI ui = new UI(dao, generator, bookDAO, linkDAO);
     }
 }
