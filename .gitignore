@@ -11,3 +11,5 @@ build
 .settings/
 .vscode/
 bin/
+
+*.swp
