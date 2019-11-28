@@ -58,6 +58,11 @@ public class Link implements Item {
     public boolean isRead() {
         return this.read;
     }
+    
+    @Override
+    public void changeRead(){
+        this.read = !this.read;
+    }
 
     @Override
     public ItemType getType() {

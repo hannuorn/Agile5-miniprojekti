@@ -10,6 +10,8 @@ public interface Item {
     
     public boolean isRead();
     
+    public void changeRead();
+    
     public ItemType getType();
     
 }
