@@ -1,5 +1,6 @@
 package ui;
 
+import dataAccess.BookDAO;
 import domain.Book;
 import domain.Link;
 import java.util.HashMap;
@@ -7,16 +8,19 @@ import spark.ModelAndView;
 import static spark.Spark.*;
 import spark.template.velocity.VelocityTemplateEngine;
 import dataAccess.DAO;
+import dataAccess.LinkDAO;
 import domain.IdGenerator;
 import domain.Item;
 
 public class UI {
 
     private DAO<Item, Integer> itemDao;
+    private BookDAO bookDAO;
+    private LinkDAO linkDAO;
     private IdGenerator idGenerator;
     static String LAYOUT = "templates/layout.html";
 
-    public UI(DAO<Item, Integer> itemDao, IdGenerator idgenerator) {
+    public UI(DAO<Item, Integer> itemDao, IdGenerator idgenerator, BookDAO boodDAO, LinkDAO linkDAO) {
         this.itemDao = itemDao;
         this.idGenerator = idgenerator;
 
@@ -110,15 +114,28 @@ public class UI {
         }, new VelocityTemplateEngine());
 
         post("/update/1/:id", (request, response) -> {
+            int id = Integer.parseInt(request.params(":id"));
+            
+            Book searchResult = (Book) itemDao.read(id);
+            
+            if (searchResult == null) {
+                response.redirect("/all");
+            }
+            
             HashMap<String, Object> model = new HashMap<>();
-            /*String author = request.queryParams("author");
+            String author = request.queryParams("author");
             String title = request.queryParams("title");
             String isbn = request.queryParams("isbn");
             String tags = request.queryParams("tags");
             String desc = request.queryParams("description");
-
-            Book newBook = new Book(idGenerator.getId(), author, title, isbn, tags, desc);
-            itemDao.create(newBook);*/
+            
+            searchResult.setAuthor(author);
+            searchResult.setTitle(title);
+            searchResult.setIsbn(isbn);
+            searchResult.setTags(tags);
+            searchResult.setDescription(desc);
+            
+            //TÄHÄN DAON UPDATE!!!!!
 
             response.redirect("/all");
 
@@ -170,6 +187,26 @@ public class UI {
 
         post("/update/2/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
+            
+            int id = Integer.parseInt(request.params(":id"));
+            
+            Link searchResult = (Link) itemDao.read(id);
+            
+            if (searchResult == null) {
+                response.redirect("/all");
+            }
+            
+            String author = request.queryParams("author");
+            String title = request.queryParams("title");
+            String url = request.queryParams("url");
+            String desc = request.queryParams("description");
+            
+            searchResult.setAuthor(author);
+            searchResult.setTitle(title);
+            searchResult.setUrl(url);
+            searchResult.setDescription(desc);
+            
+            //TÄHÄN DAON UPDATE!!!!!
            
             response.redirect("/all");
 
