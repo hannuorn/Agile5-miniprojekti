@@ -75,7 +75,7 @@ public class BookDAO implements DAO<Book, Integer> {
             "WHERE (id = :id);";
         
         try (Connection con = DB.sql2o.open()) {
-            con.createQuery(sql, true)
+            con.createQuery(sql)
                 .addParameter("id", book.getId())
                 .addParameter("author", book.getAuthor())
                 .addParameter("title", book.getTitle())

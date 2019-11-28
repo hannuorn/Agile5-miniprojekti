@@ -67,7 +67,7 @@ public class LinkDAO implements DAO<Link, Integer> {
             "WHERE (id = :id);";
         
         try (Connection con = DB.sql2o.open()) {
-            con.createQuery(sql, true)
+            con.createQuery(sql)
                 .addParameter("id", link.getId())
                 .addParameter("author", link.getAuthor())
                 .addParameter("title", link.getTitle())
