@@ -93,4 +93,9 @@ public class Book implements Item {
     public ItemType getType() {
         return ItemType.BOOK;
     }
+    
+    @Override
+    public void changeRead(){
+        this.read = !this.read;
+    }
 }

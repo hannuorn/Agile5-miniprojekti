@@ -10,17 +10,21 @@ public class MemoryItemDAO implements DAO<Item, Integer> {
 
     private ArrayList<Item> items;
     private int nextId = 1;
-    
-    public MemoryItemDAO(){
+
+    public MemoryItemDAO() {
         items = new ArrayList<>();
     }
-    
+
     @Override
     public void create(Item item) {
         items.add(item);
         switch (item.getType()) {
-            case BOOK:      ((Book) item).setId(nextId);        break;
-            case LINK:      ((Link) item).setId(nextId);        break;
+            case BOOK:
+                ((Book) item).setId(nextId);
+                break;
+            case LINK:
+                ((Link) item).setId(nextId);
+                break;
         }
         this.nextId++;
     }
@@ -36,23 +40,36 @@ public class MemoryItemDAO implements DAO<Item, Integer> {
             if (items.get(i).getId().equals(id)) {
                 this.items.remove(i);
                 return true;
-            }    
+            }
         }
-        return false;   
+        return false;
     }
-    
+
     @Override
-    public Item read(Integer id){
-        for (Item i : items){
-            if (i.getId().equals(id)){
+    public Item read(Integer id) {
+        for (Item i : items) {
+            if (i.getId().equals(id)) {
                 return i;
             }
         }
         return null;
     }
-    
+
     @Override
     public boolean update(Item item) {
-        return false;
+
+        if (read(item.getId()) == null) {
+            return false;
+        }
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getId().equals(item.getId())) {
+      
+                items.set(i, item);
+            }
+
+        }
+
+        return true;
     }
+
 }
