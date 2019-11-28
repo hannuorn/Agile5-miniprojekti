@@ -1,5 +1,11 @@
 <p>$searchResult.getInfo()</p>
 
 <br/>
+<form method="GET" action="/update_book/$searchResult.getId()">
+    <input type="submit" value="Muokkaa"/>
+</form>
+<form method="POST" action="/item/delete/$searchResult.getId()">
+    <input type="submit" value="Poista"/>
+</form>
 <a href="/">Takaisin etusivulle</a><br/>
 <a href="/all">Kaikkien vinkkien lista</a>
