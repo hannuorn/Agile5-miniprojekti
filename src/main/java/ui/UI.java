@@ -125,7 +125,7 @@ public class UI {
 
         post("/update/1/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            response.redirect("/all");
+            //response.redirect("/all");
             int id = parseId(request.params(":id"));
             if (id >= 0) {
                 Book searchResult = (Book) itemDao.read(id);
@@ -142,6 +142,8 @@ public class UI {
                     searchResult.setTags(tags);
                     searchResult.setDescription(desc);
                     itemDao.update((Item) searchResult);
+                    model.put("searchResult", searchResult);
+                    model.put("template", "templates/single_item.html");
                 }
             }
             return new ModelAndView(model, LAYOUT);
@@ -193,7 +195,7 @@ public class UI {
         post("/update/2/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
 
-            response.redirect("/all");
+            //response.redirect("/all");
             int id = parseId(request.params(":id"));
             if (id >= 0) {
                 Link searchResult = (Link) itemDao.read(id);
@@ -209,6 +211,8 @@ public class UI {
                     searchResult.setDescription(desc);
 
                     itemDao.update((Item) searchResult);
+                    model.put("searchResult", searchResult);
+                    model.put("template", "templates/single_item.html");
                 }
             }
             return new ModelAndView(model, LAYOUT);

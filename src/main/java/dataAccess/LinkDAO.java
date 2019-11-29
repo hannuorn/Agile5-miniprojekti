@@ -59,12 +59,12 @@ public class LinkDAO implements DAO<Link, Integer> {
     public boolean update(Link link) {
         String sql =
             "UPDATE Item SET " +
-            "author = ':author', " +
-            "title = ':title', " +
-            "url = ':url', " +
-            "description = ':description', " + 
-            "read = ':read' " +
-            "WHERE (id = :id);";
+            "author = :author, " +
+            "title = :title, " +
+            "url = :url, " +
+            "description = :description, " + 
+            "read = :read " +
+            "WHERE (id = :id);"; 
         
         try (Connection con = DB.sql2o.open()) {
             con.createQuery(sql)
