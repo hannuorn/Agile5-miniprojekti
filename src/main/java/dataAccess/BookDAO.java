@@ -49,16 +49,6 @@ public class BookDAO implements DAO<Book, Integer> {
     
     @Override
     public Book read(Integer id) {
-        /*
-        String sql =
-            "SELECT * FROM Item " +
-            "WHERE id = :id;";
-        try (Connection con = DB.sql2o.open()) {
-            con.createQuery(sql)
-                .addParameter("author", Integer.toString(id))
-                .executeUpdate();
-        }
-*/
         return null;
     }
 
