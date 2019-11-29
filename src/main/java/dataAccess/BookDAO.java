@@ -64,11 +64,6 @@ public class BookDAO implements DAO<Book, Integer> {
             "read = :read " +
             "WHERE (id = :id);";
         
-        int read = 0;
-        if (book.isRead()) {
-            read = 1;
-        }
-        
         try (Connection con = DB.sql2o.open()) {
             con.createQuery(sql)
                 .addParameter("author", book.getAuthor())
@@ -76,7 +71,7 @@ public class BookDAO implements DAO<Book, Integer> {
                 .addParameter("isbn", book.getIsbn())
                 .addParameter("tags", book.getTags())
                 .addParameter("description", book.getDescription())
-                .addParameter("read", read)
+                .addParameter("read", book.isRead())
                 .addParameter("id", book.getId())
                 .executeUpdate();
         }
