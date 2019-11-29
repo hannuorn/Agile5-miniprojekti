@@ -14,20 +14,20 @@ public class DB {
     public static Sql2o sql2o;
     public static final Logger logger = LoggerFactory.getLogger(DB.class);
 
-    static void executeQuery(String sql) {
+    static private void executeQuery(String sql) {
         try (Connection con = DB.sql2o.open()) {
             con.createQuery(sql).executeUpdate();
         }
     }
     
-    static void createTables() {
+    static private void createTables() {
         String sql = 
-            "DROP TABLE Item;";
+            "DROP TABLE IF EXISTS Item;";
         executeQuery(sql);
         
         sql = 
             "CREATE TABLE Item(" +
-                "id SERIAL PRIMARY KEY, " +
+                "id INTEGER PRIMARY KEY, " +
                 "type VARCHAR(20)," +
                 "read BOOLEAN," +
                 "author VARCHAR(40)," +
@@ -42,21 +42,20 @@ public class DB {
     static {
 
         try {
+            itemDao = new SQLItemDAO();
+            
             if (System.getenv("DATABASE_URL") == null) {
-                dbUri = new URI("postgres://localhost:5432/vinkkikirjasto");
-                itemDao = new SQLItemDAO();
-//                itemDao = new MemoryItemDAO();
+                sql2o = new Sql2o("jdbc:sqlite:vinkkikirjasto.db", null, null);
             } else {
                 dbUri = new URI(System.getenv("DATABASE_URL"));
-                itemDao = new SQLItemDAO();
+                final int port = dbUri.getPort();
+                final String host = dbUri.getHost();
+                final String path = dbUri.getPath();
+                final String username = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[0];
+                final String password = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[1];
+                sql2o = new Sql2o("jdbc:postgresql://" + host + ":" + port + path, username, password);
             }
-            final int port = dbUri.getPort();
-            final String host = dbUri.getHost();
-            final String path = dbUri.getPath();
-            final String username = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[0];
-            final String password = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[1];
-            sql2o = new Sql2o("jdbc:postgresql://" + host + ":" + port + path, username, password);
-//            createTables();
+            createTables();
         } catch (URISyntaxException e ) { 
             logger.error("Unable to connect to database.");
         }

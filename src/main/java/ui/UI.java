@@ -1,28 +1,22 @@
 package ui;
 
-import dataAccess.BookDAO;
-import domain.Book;
-import domain.Link;
 import java.util.HashMap;
 import spark.ModelAndView;
 import static spark.Spark.*;
 import spark.template.velocity.VelocityTemplateEngine;
+
 import dataAccess.DAO;
-import dataAccess.LinkDAO;
-import domain.IdGenerator;
 import domain.Item;
+import domain.Book;
+import domain.Link;
 
 public class UI {
 
     private DAO<Item, Integer> itemDao;
-    private BookDAO bookDAO;
-    private LinkDAO linkDAO;
-    private IdGenerator idGenerator;
     static String LAYOUT = "templates/layout.html";
 
-    public UI(DAO<Item, Integer> itemDao, IdGenerator idgenerator, BookDAO boodDAO, LinkDAO linkDAO) {
+    public UI(DAO<Item, Integer> itemDao) {
         this.itemDao = itemDao;
-        this.idGenerator = idgenerator;
 
         Book book = new Book("Matti Luukkainen", "Ohjelmistotuotanto", "1111BBBBSSSS", "Ohtu", "Testi");
         Book book2 = new Book("Maija Mallikas", "Testi", "111222", "testi", "TKT10001");

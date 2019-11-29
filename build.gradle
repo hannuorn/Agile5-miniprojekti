@@ -12,6 +12,7 @@ dependencies{
     compile group: 'com.sparkjava', name: 'spark-core', version: '2.7.1'
     compile group: 'com.sparkjava', name: 'spark-template-velocity', version: '2.7.1'
     compile group: 'postgresql', name: 'postgresql-jdbc42', version: '9.4.1208-atlassian-hosted'
+    compile group:'org.xerial', name:'sqlite-jdbc', version:'3.8.11.2'
     compile 'org.slf4j:slf4j-simple:1.7.21' 
     compile 'org.sql2o:sql2o:1.5.4' 
     testCompile 'junit:junit:4.12'

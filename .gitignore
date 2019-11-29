@@ -13,3 +13,6 @@ build
 bin/
 
 *.swp
+
+# SQLite database
+vinkkikirjasto.db
