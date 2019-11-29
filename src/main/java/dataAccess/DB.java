@@ -20,7 +20,26 @@ public class DB {
         }
     }
     
-    static private void createTables() {
+    static private void createTablesHeroku() {
+        String sql = 
+            "DROP TABLE IF EXISTS Item;";
+        executeQuery(sql);
+        
+        sql = 
+            "CREATE TABLE Item(" +
+                "id SERIAL PRIMARY KEY, " +
+                "type VARCHAR(20)," +
+                "read BOOLEAN," +
+                "author VARCHAR(40)," +
+                "title VARCHAR(40)," +
+                "isbn VARCHAR(40)," +
+                "tags VARCHAR(40)," +
+                "description VARCHAR(40)," +
+                "url VARCHAR(40));";
+        executeQuery(sql);
+    }
+    
+    static private void createTablesSqlite() {
         String sql = 
             "DROP TABLE IF EXISTS Item;";
         executeQuery(sql);
@@ -46,6 +65,7 @@ public class DB {
             
             if (System.getenv("DATABASE_URL") == null) {
                 sql2o = new Sql2o("jdbc:sqlite:vinkkikirjasto.db", null, null);
+                createTablesSqlite();
             } else {
                 dbUri = new URI(System.getenv("DATABASE_URL"));
                 final int port = dbUri.getPort();
@@ -54,8 +74,8 @@ public class DB {
                 final String username = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[0];
                 final String password = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[1];
                 sql2o = new Sql2o("jdbc:postgresql://" + host + ":" + port + path, username, password);
+                createTablesHeroku();
             }
-            createTables();
         } catch (URISyntaxException e ) { 
             logger.error("Unable to connect to database.");
         }
