@@ -11,7 +11,7 @@ public class Book implements Item {
     private boolean read;
 
     public Book(String author, String title, String isbn, String tags, String description) {
-        this.id = id;
+        this.id = 0;
         this.author = author;
         this.title = title;
         this.isbn = isbn;

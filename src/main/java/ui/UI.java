@@ -15,6 +15,17 @@ public class UI {
     private DAO<Item, Integer> itemDao;
     static String LAYOUT = "templates/layout.html";
 
+    
+    private int parseId(String idString) {
+        int id;
+        try {
+            id = Integer.parseInt(idString);
+        } catch (NumberFormatException e) {
+            id = -1;
+        }
+        return id;
+    }
+
     public UI(DAO<Item, Integer> itemDao) {
         this.itemDao = itemDao;
 
@@ -40,26 +51,28 @@ public class UI {
         get("/item/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
 
-            Integer id = Integer.parseInt(request.params(":id"));
-
-            Item searchResult = itemDao.read(id);
-
-            if (searchResult == null) {
+            int id = parseId(request.params(":id"));
+            if (id < 0) {
                 response.redirect("/all");
+            } else {
+                Item searchResult = itemDao.read(id);
+                if (searchResult == null) {
+                    response.redirect("/all");
+                } else {
+                    model.put("searchResult", searchResult);
+                    model.put("template", "templates/single_item.html");
+                }
             }
-
-            model.put("searchResult", searchResult);
-            model.put("template", "templates/single_item.html");
-
             return new ModelAndView(model, LAYOUT);
 
         }, new VelocityTemplateEngine());
 
         post("/item/delete/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            int id = Integer.parseInt(request.params(":id"));
-
-            itemDao.remove(id);
+            int id = parseId(request.params(":id"));
+            if (id >= 0) {
+                itemDao.remove(id);
+            }
             response.redirect("/all");
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
@@ -88,50 +101,49 @@ public class UI {
 
         get("/update/1/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-
-            int id = Integer.parseInt(request.params(":id"));
-
-            Book searchResult = (Book) itemDao.read(id);
-
-            if (searchResult == null) {
+            
+            int id = parseId(request.params(":id"));
+            if (id < 0) {
                 response.redirect("/all");
+            } else {
+                Book searchResult = (Book) itemDao.read(id);
+
+                if (searchResult == null) {
+                    response.redirect("/all");
+                } else {
+                    model.put("searchResult", searchResult);
+                    model.put("author", searchResult.getAuthor());
+                    model.put("title", searchResult.getTitle());
+                    model.put("isbn", searchResult.getIsbn());
+                    model.put("tags", searchResult.getTags());
+                    model.put("description", searchResult.getDescription());
+                    model.put("template", "templates/update_book.html");
+                }
             }
-            model.put("searchResult", searchResult);
-            model.put("author", searchResult.getAuthor());
-            model.put("title", searchResult.getTitle());
-            model.put("isbn", searchResult.getIsbn());
-            model.put("tags", searchResult.getTags());
-            model.put("description", searchResult.getDescription());
-            model.put("template", "templates/update_book.html");
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
         post("/update/1/:id", (request, response) -> {
-            int id = Integer.parseInt(request.params(":id"));
-            
-            Book searchResult = (Book) itemDao.read(id);
-            
-            if (searchResult == null) {
-                response.redirect("/all");
-            }
-            
             HashMap<String, Object> model = new HashMap<>();
-            String author = request.queryParams("author");
-            String title = request.queryParams("title");
-            String isbn = request.queryParams("isbn");
-            String tags = request.queryParams("tags");
-            String desc = request.queryParams("description");
-            
-            searchResult.setAuthor(author);
-            searchResult.setTitle(title);
-            searchResult.setIsbn(isbn);
-            searchResult.setTags(tags);
-            searchResult.setDescription(desc);
-            
-            itemDao.update((Item) searchResult);
-
             response.redirect("/all");
+            int id = parseId(request.params(":id"));
+            if (id >= 0) {
+                Book searchResult = (Book) itemDao.read(id);
+                if (searchResult != null) {
+                    String author = request.queryParams("author");
+                    String title = request.queryParams("title");
+                    String isbn = request.queryParams("isbn");
+                    String tags = request.queryParams("tags");
+                    String desc = request.queryParams("description");
 
+                    searchResult.setAuthor(author);
+                    searchResult.setTitle(title);
+                    searchResult.setIsbn(isbn);
+                    searchResult.setTags(tags);
+                    searchResult.setDescription(desc);
+                    itemDao.update((Item) searchResult);
+                }
+            }
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
@@ -160,49 +172,45 @@ public class UI {
         get("/update/2/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
 
-            int id = Integer.parseInt(request.params(":id"));
-
-            Link searchResult = (Link) itemDao.read(id);
-
-            if (searchResult == null) {
+            int id = parseId(request.params(":id"));
+            if (id < 0) {
                 response.redirect("/all");
+            } else {
+                Link searchResult = (Link) itemDao.read(id);
+                if (searchResult == null) {
+                    response.redirect("/all");
+                }
+                model.put("searchResult", searchResult);
+                model.put("author", searchResult.getAuthor());
+                model.put("title", searchResult.getTitle());
+                model.put("url", searchResult.getUrl());
+                model.put("description", searchResult.getDescription());
+                model.put("template", "templates/update_link.html");
             }
-
-            model.put("searchResult", searchResult);
-            model.put("author", searchResult.getAuthor());
-            model.put("title", searchResult.getTitle());
-            model.put("url", searchResult.getUrl());
-            model.put("description", searchResult.getDescription());
-            model.put("template", "templates/update_link.html");
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
         post("/update/2/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            
-            int id = Integer.parseInt(request.params(":id"));
-            
-            Link searchResult = (Link) itemDao.read(id);
-            
-            if (searchResult == null) {
-                response.redirect("/all");
-            }
-            
-            String author = request.queryParams("author");
-            String title = request.queryParams("title");
-            String url = request.queryParams("url");
-            String desc = request.queryParams("description");
-            
-            searchResult.setAuthor(author);
-            searchResult.setTitle(title);
-            searchResult.setUrl(url);
-            searchResult.setDescription(desc);
-            
 
-            itemDao.update((Item) searchResult);
-           
             response.redirect("/all");
+            int id = parseId(request.params(":id"));
+            if (id >= 0) {
+                Link searchResult = (Link) itemDao.read(id);
+                if (searchResult != null) {
+                    String author = request.queryParams("author");
+                    String title = request.queryParams("title");
+                    String url = request.queryParams("url");
+                    String desc = request.queryParams("description");
 
+                    searchResult.setAuthor(author);
+                    searchResult.setTitle(title);
+                    searchResult.setUrl(url);
+                    searchResult.setDescription(desc);
+
+                    itemDao.update((Item) searchResult);
+                }
+            }
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
@@ -215,19 +223,15 @@ public class UI {
         post("/changeReadStatus/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             
-            int id = Integer.parseInt(request.params(":id"));
-            
-            Item foundItem = itemDao.read(id);
-            
-            foundItem.changeRead();
-            
-         
-            itemDao.update(foundItem);
-            
-         
-            response.redirect("/item/"+id);
-
-
+            int id = parseId(request.params(":id"));
+            if (id >= 0) {
+                Item item = itemDao.read(id);
+                if (item != null) {
+                    item.changeRead();
+                    itemDao.update(item);
+                    response.redirect("/item/"+id);
+                }
+            }
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 

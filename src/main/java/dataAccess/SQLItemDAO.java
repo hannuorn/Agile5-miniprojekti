@@ -65,7 +65,14 @@ public class SQLItemDAO implements DAO<Item, Integer> {
 
     @Override
     public boolean remove(Integer id) {
-        return false;   
+        String sql =
+            "DELETE FROM Item WHERE id = :id;";
+        try (Connection con = DB.sql2o.open()) {
+            con.createQuery(sql)
+                .addParameter("id", id)
+                .executeUpdate();
+        }
+        return true;
     }
     
     @Override

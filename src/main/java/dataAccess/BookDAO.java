@@ -66,23 +66,28 @@ public class BookDAO implements DAO<Book, Integer> {
     public boolean update(Book book) {
         String sql =
             "UPDATE Item SET " +
-            "author = ':author', " +
-            "title = ':title', " +
-            "isbn = ':isbn', " +
-            "tags = ':tags', " +
-            "description = ':description', " + 
-            "read = ':read' " +
+            "author = :author, " +
+            "title = :title, " +
+            "isbn = :isbn, " +
+            "tags = :tags, " +
+            "description = :description, " + 
+            "read = :read " +
             "WHERE (id = :id);";
+        
+        int read = 0;
+        if (book.isRead()) {
+            read = 1;
+        }
         
         try (Connection con = DB.sql2o.open()) {
             con.createQuery(sql)
-                .addParameter("id", book.getId())
                 .addParameter("author", book.getAuthor())
                 .addParameter("title", book.getTitle())
                 .addParameter("isbn", book.getIsbn())
                 .addParameter("tags", book.getTags())
                 .addParameter("description", book.getDescription())
-                .addParameter("read", book.isRead())
+                .addParameter("read", read)
+                .addParameter("id", book.getId())
                 .executeUpdate();
         }
         return true;
