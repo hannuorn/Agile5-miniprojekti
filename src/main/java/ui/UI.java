@@ -29,12 +29,6 @@ public class UI {
     public UI(DAO<Item, Integer> itemDao) {
         this.itemDao = itemDao;
 
-        Book book = new Book("Matti Luukkainen", "Ohjelmistotuotanto", "1111BBBBSSSS", "Ohtu", "Testi");
-        Book book2 = new Book("Maija Mallikas", "Testi", "111222", "testi", "TKT10001");
-        System.out.println(book.getInfo());
-        itemDao.create(book);
-        itemDao.create(book2);
-
         get("/", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             model.put("template", "templates/index.html");
