@@ -15,12 +15,13 @@ public class BookDAO implements DAO<Book, Integer> {
     @Override
     public void create(Book book) {
         String sql =
-            "INSERT INTO Item (type, author, title, isbn, tags, description) " +
-            "VALUES (:type, :author, :title, :isbn, :tags, :description);";
+            "INSERT INTO Item (type, read, author, title, isbn, tags, description) " +
+            "VALUES (:type, :read, :author, :title, :isbn, :tags, :description);";
 
         try (Connection con = DB.sql2o.open()) {
             Integer key = con.createQuery(sql, true)
                 .addParameter("type", ItemType.itemTypeToInteger(ItemType.BOOK))
+                .addParameter("read", 0)
                 .addParameter("author", book.getAuthor())
                 .addParameter("title", book.getTitle())
                 .addParameter("isbn", book.getIsbn())

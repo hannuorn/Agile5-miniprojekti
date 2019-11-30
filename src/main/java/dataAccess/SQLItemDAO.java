@@ -43,18 +43,24 @@ public class SQLItemDAO implements DAO<Item, Integer> {
                 String author = row.getString("author");
                 String title = row.getString("title");
                 String description = row.getString("description");
+                boolean read = false;
+                if (row.getInteger("read") != 0) {
+                    read = true;
+                }
                 switch (type) {
                     case BOOK:
                         String isbn = row.getString("isbn");
                         String tags = row.getString("tags");
                         Book book = new Book(author, title, isbn, tags, description);
                         book.setId(id);
+                        book.setRead(read);
                         items.add(book);
                         break;
                     case LINK:
                         String url = row.getString("url");
                         Link link = new Link(author, title, url, description);
                         link.setId(id);
+                        link.setRead(read);
                         items.add(link);
                         break;
                 }
@@ -94,18 +100,24 @@ public class SQLItemDAO implements DAO<Item, Integer> {
                 String author = row.getString("author");
                 String title = row.getString("title");
                 String description = row.getString("description");
+                boolean read = false;
+                if (row.getInteger("read") != 0) {
+                    read = true;
+                }
                 switch (type) {
                     case BOOK:
                         String isbn = row.getString("isbn");
                         String tags = row.getString("tags");
                         Book book = new Book(author, title, isbn, tags, description);
                         book.setId(id);
+                        book.setRead(read);
                         item = book;
                         break;
                     case LINK:
                         String url = row.getString("url");
                         Link link = new Link(author, title, url, description);
                         link.setId(id);
+                        link.setRead(read);
                         item = link;
                         break;
                 }
