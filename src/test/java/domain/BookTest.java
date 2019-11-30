@@ -2,13 +2,19 @@ package domain;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
 
 public class BookTest {
 
+    Book book;
+
+    @Before
+    public void setUp() {
+        book = new Book("Robert Martin", "Clean Code: A Handbook of Agile Software Craftsmanship", "978-0132350884", "Ohjelmointi, design patterns", "TKT20006 Ohjelmistotuotanto");
+    }
+
     @Test
     public void constructorCreatesNewBook() {
-        Book book = new Book("Robert Martin", "Clean Code: A Handbook of Agile Software Craftsmanship", "978-0132350884", "Ohjelmointi, design patterns", "TKT20006 Ohjelmistotuotanto");
-
         String string = book.getInfo();
         String expected = "Kirjoittaja: Robert Martin" + "<br/>"
                 + "Otsikko: Clean Code: A Handbook of Agile Software Craftsmanship" + "<br/>"
@@ -19,11 +25,9 @@ public class BookTest {
 
         assertEquals(expected, string);
     }
-    
+
     @Test
     public void bookHasCorrectType() {
-        Book book = new Book("Robert Martin", "Clean Code: A Handbook of Agile Software Craftsmanship", "978-0132350884", "Ohjelmointi, design patterns", "TKT20006 Ohjelmistotuotanto");
-
-        assertEquals(ItemType.BOOK, book.getType());        
+        assertEquals(ItemType.BOOK, book.getType());
     }
 }
