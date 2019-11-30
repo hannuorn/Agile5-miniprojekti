@@ -67,6 +67,11 @@ public class LinkDAO implements DAO<Link, Integer> {
             "read = :read " +
             "WHERE (id = :id);"; 
         
+        int read = 0;
+        if (link.isRead()) {
+            read = 1;
+        }
+        
         try (Connection con = DB.sql2o.open()) {
             con.createQuery(sql)
                 .addParameter("id", link.getId())
@@ -74,7 +79,7 @@ public class LinkDAO implements DAO<Link, Integer> {
                 .addParameter("title", link.getTitle())
                 .addParameter("url", link.getUrl())
                 .addParameter("description", link.getDescription())
-                .addParameter("read", link.isRead())
+                .addParameter("read", read)
                 .executeUpdate();
         }
         return true;

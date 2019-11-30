@@ -29,7 +29,7 @@ public class DB {
             "CREATE TABLE Item(" +
                 "id SERIAL PRIMARY KEY, " +
                 "type VARCHAR(20)," +
-                "read BOOLEAN," +
+                "read INTEGER," +
                 "author VARCHAR(40)," +
                 "title VARCHAR(40)," +
                 "isbn VARCHAR(40)," +
@@ -48,7 +48,7 @@ public class DB {
             "CREATE TABLE Item(" +
                 "id INTEGER PRIMARY KEY, " +
                 "type VARCHAR(20)," +
-                "read BOOLEAN," +
+                "read INTEGER," +
                 "author VARCHAR(40)," +
                 "title VARCHAR(40)," +
                 "isbn VARCHAR(40)," +
