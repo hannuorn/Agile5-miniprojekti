@@ -8,15 +8,15 @@ import spark.template.velocity.VelocityTemplateEngine;
 import dataAccess.DAO;
 import domain.Item;
 import domain.Book;
-import domain.ItemType;
+import domain.Filter;
 import domain.Link;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UI {
 
     private DAO<Item, Integer> itemDao;
     static String LAYOUT = "templates/layout.html";
+    private Filter filter;
 
     private int parseId(String idString) {
         int id;
@@ -30,6 +30,7 @@ public class UI {
 
     public UI(DAO<Item, Integer> itemDao) {
         this.itemDao = itemDao;
+        this.filter = new Filter(itemDao);
 
         get("/", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
@@ -241,55 +242,15 @@ public class UI {
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
-        post("/filter_items/type/:type", (request, response) -> {
+        post("/filter_items/:type", (request, response) -> {
             int type = parseId(request.params(":type"));
-            ItemType toFind = ItemType.BOOK;
-            
-            if (type == 2) {
-                toFind = ItemType.LINK;
-            }
             
             HashMap<String, Object> model = new HashMap<>();
-            List<Item> allItems = itemDao.list();
-            List<Item> filteredItems = new ArrayList<>();
-            
-            for (int i = 0; i < allItems.size(); i++) {
-                
-                if (allItems.get(i).getType() == toFind) {
-                    filteredItems.add(allItems.get(i));
-                }
-            }
-            
+            List<Item> filteredItems = filter.filter(type);
             model.put("list", filteredItems);
             model.put("template", "templates/filter_items.html");
             
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
-        
-        post("/filter_items/read/:status", (request, response) -> {
-            int status = parseId(request.params(":status"));
-            boolean isRead = true;
-            
-            if (status == 4) {
-                isRead = false;
-            }
-            
-            HashMap<String, Object> model = new HashMap<>();
-            List<Item> allItems = itemDao.list();
-            List<Item> filteredItems = new ArrayList<>();
-            
-            for (int i = 0; i < allItems.size(); i++) {
-                
-                if (allItems.get(i).isRead() == isRead) {
-                    filteredItems.add(allItems.get(i));
-                }
-            }
-            
-            model.put("list", filteredItems);
-            model.put("template", "templates/filter_items.html");
-            
-            return new ModelAndView(model, LAYOUT);
-        }, new VelocityTemplateEngine());
-
     }
 }
