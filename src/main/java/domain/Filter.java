@@ -19,9 +19,9 @@ public class Filter {
             case 2:
                 return filterType(ItemType.LINK);
             case 3:
-                return filterStatus(true);
+                return filterReadStatus(true);
             default:
-                return filterStatus(false);
+                return filterReadStatus(false);
         }
     }
 
@@ -36,7 +36,7 @@ public class Filter {
         return filteredItems;
     }
 
-    public List<Item> filterStatus(boolean status) {
+    public List<Item> filterReadStatus(boolean status) {
         List<Item> allItems = itemDao.list();
         List<Item> filteredItems = new ArrayList<>();
         for (int i = 0; i < allItems.size(); i++) {
