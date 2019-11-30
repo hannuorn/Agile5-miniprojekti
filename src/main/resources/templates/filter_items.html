@@ -1,0 +1,40 @@
+
+<main role="main" class="container">
+    <div class="d-flex">
+        <div class="mr-auto p-2">
+            <h1>Luokittele vinkkejä</h1>
+        </div>
+
+        <div class="p-2"> 
+            <form method="POST" action="/filter_items/type/1">
+                <input type="submit" class="btn btn-primary" value="Kirjat" />
+            </form>
+        </div>
+        <div class="p-2">
+            <form method="POST" action="/filter_items/type/2">
+                <input type="submit" class="btn btn-primary" value="Linkit" />
+            </form>
+        </div>
+        <div class="p-2">
+            <form method="POST" action="/filter_items/read/3">
+                <input type="submit" class="btn btn-primary" value="Luetut" />
+            </form>
+        </div>
+        <div class="p-2">
+            <form method="POST" action="/filter_items/read/4">
+                <input type="submit" class="btn btn-primary" value="Lukemattomat" />
+            </form>
+        </div>
+
+    </div> 
+    <div>
+        <ul>
+            #foreach($row in $list)
+            <li><a href="/item/$row.getId()">$row.getTitle()</a></li>
+            #end
+        </ul>
+    </div>
+    <br>
+    <a href="/">Takaisin etusivulle</a><br/>
+    <a href="/all">Kaikkien vinkkien lista</a>
+</main>

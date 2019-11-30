@@ -8,14 +8,16 @@ import spark.template.velocity.VelocityTemplateEngine;
 import dataAccess.DAO;
 import domain.Item;
 import domain.Book;
+import domain.ItemType;
 import domain.Link;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UI {
 
     private DAO<Item, Integer> itemDao;
     static String LAYOUT = "templates/layout.html";
 
-    
     private int parseId(String idString) {
         int id;
         try {
@@ -95,7 +97,7 @@ public class UI {
 
         get("/update/1/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            
+
             int id = parseId(request.params(":id"));
             if (id < 0) {
                 response.redirect("/all");
@@ -151,7 +153,7 @@ public class UI {
 
         post("/new_link", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            
+
             String author = request.queryParams("author");
             String title = request.queryParams("title");
             String url = request.queryParams("url");
@@ -220,19 +222,74 @@ public class UI {
 
         post("/changeReadStatus/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            
+
             int id = parseId(request.params(":id"));
             if (id >= 0) {
                 Item item = itemDao.read(id);
                 if (item != null) {
                     item.changeRead();
                     itemDao.update(item);
-                    response.redirect("/item/"+id);
+                    response.redirect("/item/" + id);
                 }
             }
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
-    }
+        get("/filter_items", (request, response) -> {
+            HashMap<String, Object> model = new HashMap<>();
+            model.put("template", "templates/filter_items.html");
+            return new ModelAndView(model, LAYOUT);
+        }, new VelocityTemplateEngine());
 
+        post("/filter_items/type/:type", (request, response) -> {
+            int type = parseId(request.params(":type"));
+            ItemType toFind = ItemType.BOOK;
+            
+            if (type == 2) {
+                toFind = ItemType.LINK;
+            }
+            
+            HashMap<String, Object> model = new HashMap<>();
+            List<Item> allItems = itemDao.list();
+            List<Item> filteredItems = new ArrayList<>();
+            
+            for (int i = 0; i < allItems.size(); i++) {
+                
+                if (allItems.get(i).getType() == toFind) {
+                    filteredItems.add(allItems.get(i));
+                }
+            }
+            
+            model.put("list", filteredItems);
+            model.put("template", "templates/filter_items.html");
+            
+            return new ModelAndView(model, LAYOUT);
+        }, new VelocityTemplateEngine());
+        
+        post("/filter_items/read/:status", (request, response) -> {
+            int status = parseId(request.params(":status"));
+            boolean isRead = true;
+            
+            if (status == 4) {
+                isRead = false;
+            }
+            
+            HashMap<String, Object> model = new HashMap<>();
+            List<Item> allItems = itemDao.list();
+            List<Item> filteredItems = new ArrayList<>();
+            
+            for (int i = 0; i < allItems.size(); i++) {
+                
+                if (allItems.get(i).isRead() == isRead) {
+                    filteredItems.add(allItems.get(i));
+                }
+            }
+            
+            model.put("list", filteredItems);
+            model.put("template", "templates/filter_items.html");
+            
+            return new ModelAndView(model, LAYOUT);
+        }, new VelocityTemplateEngine());
+
+    }
 }
