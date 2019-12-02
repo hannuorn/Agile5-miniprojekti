@@ -7,10 +7,12 @@ import static org.junit.Assert.*;
 public class LinkTest {
     
     Link link;
+    String url;
     
     @Before
     public void setUp() {
-        link = new Link("Nicola Apicella", "Consistency models", "https://dev.to/napicellatwit/consistency-models-52l", "Hieno ohje.");
+        url = "https://dev.to/napicellatwit/consistency-models-52l";
+        link = new Link("Nicola Apicella", "Consistency models", url, "Hieno ohje.");
     }
     
     @Test
@@ -20,7 +22,7 @@ public class LinkTest {
         String expected = "Kirjoittaja: Nicola Apicella" + "<br/>"
                 + "Otsikko: Consistency models" + "<br/>"
                 + "Tyyppi: " + "Linkki" + "<br/>"
-                + "URL: https://dev.to/napicellatwit/consistency-models-52l" + "<br/>"
+                + "URL: <a href=\"" + url + "\" target=\"_blank\">" + url + "</a><br/>"
                 + "Kommentti: Hieno ohje.";
         
         assertEquals(info, expected);
