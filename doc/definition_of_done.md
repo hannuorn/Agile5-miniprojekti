@@ -2,17 +2,11 @@
 
 ## Acceptance testing
 
-Definition of done requires a Cucumber test which shows that the
-feature described in the user story is working properly with a valid input.
-
-There must also be at least one Cucumber test which shows that
-the program handles invalid input properly.
-
-Cucumber tests beyond above requirements are always considered when necessary.
+Cucumber tests are added for the new feature whenever they're necessary.
 
 ## Test coverage
 
-Definition of done requires minimum of 75% test coverage.
+Definition of done requires minimum of 70% test coverage.
 
 ## Production
 
@@ -24,6 +18,6 @@ The feature has to be checked by CircleCI.
 
 Definition of done requires the following rules of coding style:
 
-1. Variable names start with small letters
+1. Variable names are written in camelCase
 2. Method names are written in camelCase
 3. Class names start with capital letters
