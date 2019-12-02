@@ -1,5 +1,7 @@
 <h1>Asennusohje</h1>
 
+HUOM!! Sovellus on nyt Herokussa, joten asennus ei ole enää tarpeellinen, mutta pätee tilanteeseen, jossa halutaan tarkastella sovellusta paikallisesti. Avaa sovellus Herokussa [tästä](http://vinkkikirjasto.herokuapp.com/) linkistä. <br/><br/>
+
 Vaihe 1: Lataa projekti githubista koneellesi joko lataamalla .zip tiedosto tai kloonaamalla repositorio seuraavalla komennolla:<br/><br/>
 
 <i>git clone git@github.com:hannuorn/Agile5-miniprojekti.git</i><br/><br/>
