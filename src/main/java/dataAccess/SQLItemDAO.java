@@ -31,7 +31,7 @@ public class SQLItemDAO implements DAO<Item, Integer> {
     @Override
     public List<Item> list() {
         String sql =
-            "SELECT * FROM Item;";
+            "SELECT * FROM Item ORDER BY title;";
         
         ArrayList<Item> items = new ArrayList<>();
         
