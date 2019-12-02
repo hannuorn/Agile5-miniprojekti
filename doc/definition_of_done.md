@@ -21,3 +21,4 @@ Definition of done requires the following rules of coding style:
 1. Variable names are written in camelCase
 2. Method names are written in camelCase
 3. Class names start with capital letters
+4. Template names (HTML documents) are written in snake_case
