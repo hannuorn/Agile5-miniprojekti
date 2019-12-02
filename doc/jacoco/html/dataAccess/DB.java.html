@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DB.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Vinkkikirjasto</a> &gt; <a href="index.source.html" class="el_package">dataAccess</a> &gt; <span class="el_source">DB.java</span></div><h1>DB.java</h1><pre class="source lang-java linenums">package dataAccess;
+
+import domain.Item;
+import org.sql2o.*;
+import java.net.URI;
+import java.net.URISyntaxException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+<span class="nc" id="L10">public class DB {</span>
+
+    public static DAO&lt;Item, Integer&gt; itemDao;
+    private static URI dbUri;
+    public static Sql2o sql2o;
+<span class="nc" id="L15">    public static final Logger logger = LoggerFactory.getLogger(DB.class);</span>
+
+    static private void executeQuery(String sql) {
+<span class="nc" id="L18">        try (Connection con = DB.sql2o.open()) {</span>
+<span class="nc" id="L19">            con.createQuery(sql).executeUpdate();</span>
+        }
+<span class="nc" id="L21">    }</span>
+    
+    static private void createTablesHeroku() {
+<span class="nc" id="L24">        String sql = </span>
+            &quot;DROP TABLE IF EXISTS Item;&quot;;
+<span class="nc" id="L26">        executeQuery(sql);</span>
+        
+<span class="nc" id="L28">        sql = </span>
+            &quot;CREATE TABLE Item(&quot; +
+                &quot;id SERIAL PRIMARY KEY, &quot; +
+                &quot;type VARCHAR(20),&quot; +
+                &quot;read INTEGER,&quot; +
+                &quot;author VARCHAR(40),&quot; +
+                &quot;title VARCHAR(40),&quot; +
+                &quot;isbn VARCHAR(40),&quot; +
+                &quot;tags VARCHAR(40),&quot; +
+                &quot;description VARCHAR(40),&quot; +
+                &quot;url VARCHAR(40));&quot;;
+<span class="nc" id="L39">        executeQuery(sql);</span>
+<span class="nc" id="L40">    }</span>
+    
+    static private void createTablesSqlite() {
+<span class="nc" id="L43">        String sql = </span>
+            &quot;DROP TABLE IF EXISTS Item;&quot;;
+<span class="nc" id="L45">        executeQuery(sql);</span>
+        
+<span class="nc" id="L47">        sql = </span>
+            &quot;CREATE TABLE Item(&quot; +
+                &quot;id INTEGER PRIMARY KEY, &quot; +
+                &quot;type VARCHAR(20),&quot; +
+                &quot;read INTEGER,&quot; +
+                &quot;author VARCHAR(40),&quot; +
+                &quot;title VARCHAR(40),&quot; +
+                &quot;isbn VARCHAR(40),&quot; +
+                &quot;tags VARCHAR(40),&quot; +
+                &quot;description VARCHAR(40),&quot; +
+                &quot;url VARCHAR(40));&quot;;
+<span class="nc" id="L58">        executeQuery(sql);</span>
+<span class="nc" id="L59">    }</span>
+    
+    static {
+
+        try {
+<span class="nc" id="L64">            itemDao = new SQLItemDAO();</span>
+            
+<span class="nc bnc" id="L66" title="All 2 branches missed.">            if (System.getenv(&quot;DATABASE_URL&quot;) == null) {</span>
+<span class="nc" id="L67">                sql2o = new Sql2o(&quot;jdbc:sqlite:vinkkikirjasto.db&quot;, null, null);</span>
+<span class="nc" id="L68">                createTablesSqlite();</span>
+            } else {
+<span class="nc" id="L70">                dbUri = new URI(System.getenv(&quot;DATABASE_URL&quot;));</span>
+<span class="nc" id="L71">                final int port = dbUri.getPort();</span>
+<span class="nc" id="L72">                final String host = dbUri.getHost();</span>
+<span class="nc" id="L73">                final String path = dbUri.getPath();</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">                final String username = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(&quot;:&quot;)[0];</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">                final String password = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(&quot;:&quot;)[1];</span>
+<span class="nc" id="L76">                sql2o = new Sql2o(&quot;jdbc:postgresql://&quot; + host + &quot;:&quot; + port + path, username, password);</span>
+//                createTablesHeroku();
+            }
+<span class="nc" id="L79">        } catch (URISyntaxException e ) { </span>
+<span class="nc" id="L80">            logger.error(&quot;Unable to connect to database.&quot;);</span>
+<span class="nc" id="L81">        }</span>
+<span class="nc" id="L82">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
