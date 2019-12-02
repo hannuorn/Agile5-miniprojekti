@@ -24,7 +24,7 @@ public class Link implements Item {
         return "Kirjoittaja: " + this.author + "<br/>"
                 + "Otsikko: " + this.title + "<br/>"
                 + "Tyyppi: " + "Linkki" + "<br/>"
-                + "URL: " + this.url + "<br/>"
+                + "URL: <a href=\"" + this.url + "\">" + this.url + "</a><br/>"
                 + "Kommentti: " + this.description;
     }
 
