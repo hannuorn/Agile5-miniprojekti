@@ -12,7 +12,7 @@ public class LinkTest {
     @Before
     public void setUp() {
         url = "https://dev.to/napicellatwit/consistency-models-52l";
-        link = new Link("Nicola Apicella", "Consistency models", url, "Hieno ohje.");
+        link = new Link("Nicola Apicella", "Consistency models", url, "Hieno ohje.", false);
     }
     
     @Test

@@ -56,6 +56,12 @@ public class UI {
                 if (searchResult == null) {
                     response.redirect("/all");
                 } else {
+                    if(searchResult.getClass().toString().equals("class domain.Link")) {
+                        model.put("video", "on");
+                    } else {
+                        model.put("video", "off");
+                    }
+                    
                     model.put("searchResult", searchResult);
                     model.put("template", "templates/single_item.html");
                 }
@@ -96,6 +102,7 @@ public class UI {
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
+        //Update book
         get("/update/1/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
 
@@ -120,6 +127,7 @@ public class UI {
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
+        //Update book
         post("/update/1/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             //response.redirect("/all");
@@ -159,8 +167,16 @@ public class UI {
             String title = request.queryParams("title");
             String url = request.queryParams("url");
             String desc = request.queryParams("description");
+            String checkboxData = request.queryParams("isVideo");
+            Boolean isVideo = false;
+            
+            System.out.println(checkboxData);
+            
+            if(checkboxData != null && checkboxData.equals("on")) {
+                isVideo = true;
+            }
 
-            Link newLink = new Link(author, title, url, desc);
+            Link newLink = new Link(author, title, url, desc, isVideo);
             itemDao.create(newLink);
 
             response.redirect("/all");
@@ -168,6 +184,7 @@ public class UI {
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
+        //Update link
         get("/update/2/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
 
@@ -184,11 +201,16 @@ public class UI {
                 model.put("title", searchResult.getTitle());
                 model.put("url", searchResult.getUrl());
                 model.put("description", searchResult.getDescription());
+                if(searchResult.getIsVideo() == true) {
+                    System.out.println("cheese");
+                    model.put("checked", "true");
+                }
                 model.put("template", "templates/update_link.html");
             }
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
+        //Update link
         post("/update/2/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
 
@@ -201,11 +223,18 @@ public class UI {
                     String title = request.queryParams("title");
                     String url = request.queryParams("url");
                     String desc = request.queryParams("description");
+                    String checkboxData = request.queryParams("isVideo");
+                    Boolean isVideo = false;
+                    
+                    if(checkboxData != null && checkboxData.equals("on")) {
+                        isVideo = true;
+                    }
 
                     searchResult.setAuthor(author);
                     searchResult.setTitle(title);
                     searchResult.setUrl(url);
                     searchResult.setDescription(desc);
+                    searchResult.setIsVideo(isVideo);
 
                     itemDao.update((Item) searchResult);
                     model.put("searchResult", searchResult);
