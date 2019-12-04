@@ -15,8 +15,8 @@ public class BookDAO implements DAO<Book, Integer> {
     @Override
     public void create(Book book) {
         String sql =
-            "INSERT INTO Item (type, read, author, title, isbn, tags, description) " +
-            "VALUES (:type, :read, :author, :title, :isbn, :tags, :description);";
+            "INSERT INTO Item (type, read, author, title, isbn, tags, description, video) " +
+            "VALUES (:type, :read, :author, :title, :isbn, :tags, :description, :video);";
 
         try (Connection con = DB.sql2o.open()) {
             Integer key = con.createQuery(sql, true)
@@ -27,6 +27,7 @@ public class BookDAO implements DAO<Book, Integer> {
                 .addParameter("isbn", book.getIsbn())
                 .addParameter("tags", book.getTags())
                 .addParameter("description", book.getDescription())
+                .addParameter("video", 0)
                 .executeUpdate()
                 .getKey(Integer.class);
             book.setId(key);
