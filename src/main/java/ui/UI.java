@@ -58,6 +58,9 @@ public class UI {
                 } else {
                     if(searchResult.getClass().toString().equals("class domain.Link")) {
                         model.put("video", "on");
+                        Link link = (Link)searchResult;
+                        String url = link.getUrl();
+                        model.put("url", "url");
                     } else {
                         model.put("video", "off");
                     }
