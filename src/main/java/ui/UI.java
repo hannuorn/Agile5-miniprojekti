@@ -34,14 +34,8 @@ public class UI {
         this.itemDao = itemDao;
         this.filter = new Filter(itemDao);
         this.validator = new Validator();
-
+        
         get("/", (request, response) -> {
-            HashMap<String, Object> model = new HashMap<>();
-            model.put("template", "templates/index.html");
-            return new ModelAndView(model, LAYOUT);
-        }, new VelocityTemplateEngine());
-
-        get("/all", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             model.put("list", itemDao.list());
             model.put("template", "templates/all.html");
