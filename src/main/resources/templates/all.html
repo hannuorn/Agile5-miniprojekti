@@ -1,16 +1,27 @@
-<h1>Vinkkikirjasto</h1>
-<ul>
-    #foreach($row in $list)
-    <li><a href="/item/$row.getId()">$row.getTitle()</a>
-        #if($row.isRead())
-        <span class="badge badge-danger">Luettu</span>
-        #else
-        <span class="badge badge-success">Lukematon</span>
+<main role="main" class="container">
+    <div class="d-flex">
+        <div class="mr-auto p-2"> 
+            <h1>Vinkkikirjasto</h1>
+        </div>
+        <div class="p-2"> 
+            <form method="POST" action="/search" class="form-inline">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <input class="form-control form-control-sm ml-3 w-75" type="text" name="search" placeholder="Search" aria-label="Search">
+            </form> 
+        </div>
+    </div>
+    <br>
+    <ul>
+        #foreach($row in $list)
+        <li><a href="/item/$row.getId()">$row.getTitle()</a>
+            #if($row.isRead())
+            <span class="badge badge-danger">Luettu</span>
+            #else
+            <span class="badge badge-success">Lukematon</span>
+            #end
+        </li>
         #end
-    </li>
-    #end
-</ul>
-<a href="/choose_item_type">Lisää uusi vinkki</a><br/>
-<a href="/filter_items">Luokittele vinkkejä</a>
-
-
+    </ul>
+    <a href="/choose_item_type">Lisää uusi vinkki</a><br/>
+    <a href="/filter_items">Luokittele vinkkejä</a>
+</main>

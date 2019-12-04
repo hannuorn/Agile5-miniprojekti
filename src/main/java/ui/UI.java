@@ -41,6 +41,14 @@ public class UI {
             model.put("template", "templates/all.html");
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
+        
+        post("/search", (request, response) -> {
+            HashMap<String, Object> model = new HashMap<>();
+            List<Item> foundItems = filter.searchAll(request.queryParams("search"));
+            model.put("list", foundItems);
+            model.put("template", "templates/all.html");
+            return new ModelAndView(model, LAYOUT);
+        }, new VelocityTemplateEngine());
 
         get("/item/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();

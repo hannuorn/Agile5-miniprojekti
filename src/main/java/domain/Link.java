@@ -38,6 +38,7 @@ public class Link implements Item {
         this.id = id;
     }
 
+    @Override
     public String getAuthor() {
         return author;
     }
@@ -51,6 +52,7 @@ public class Link implements Item {
         return url;
     }
 
+    @Override
     public String getDescription() {
         return description;
     }

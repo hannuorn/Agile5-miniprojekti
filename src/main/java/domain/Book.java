@@ -34,6 +34,7 @@ public class Book implements Item {
         this.id = id;
     }
 
+    @Override
     public String getAuthor() {
         return this.author;
     }
@@ -51,6 +52,7 @@ public class Book implements Item {
         return this.tags;
     }
 
+    @Override
     public String getDescription() {
         return this.description;
     }

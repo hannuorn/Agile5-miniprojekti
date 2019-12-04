@@ -8,6 +8,10 @@ public interface Item {
     
     public String getTitle();
     
+    public String getAuthor();
+    
+    public String getDescription();
+    
     public boolean isRead();
     
     public void changeRead();

@@ -46,4 +46,19 @@ public class Filter {
         }
         return filteredItems;
     }
+    
+    public List<Item> searchAll(String search) {
+        search = search.toLowerCase();
+        List<Item> allItems = itemDao.list();
+        List<Item> foundItems = new ArrayList<>();
+        for (int i = 0; i < allItems.size(); i++) {
+            
+            if (allItems.get(i).getTitle().toLowerCase().contains(search) 
+                    || allItems.get(i).getAuthor().toLowerCase().contains(search) 
+                    || allItems.get(i).getDescription().toLowerCase().contains(search)) {
+                foundItems.add(allItems.get(i));
+            }
+        }
+        return foundItems;
+    }
 }
