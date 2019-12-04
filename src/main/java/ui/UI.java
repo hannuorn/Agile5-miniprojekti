@@ -10,6 +10,7 @@ import domain.Item;
 import domain.Book;
 import domain.Filter;
 import domain.Link;
+import domain.Validator;
 import java.util.List;
 
 public class UI {
@@ -17,6 +18,7 @@ public class UI {
     private DAO<Item, Integer> itemDao;
     static String LAYOUT = "templates/layout.html";
     private Filter filter;
+    private Validator validator;
 
     private int parseId(String idString) {
         int id;
@@ -31,6 +33,7 @@ public class UI {
     public UI(DAO<Item, Integer> itemDao) {
         this.itemDao = itemDao;
         this.filter = new Filter(itemDao);
+        this.validator = new Validator();
 
         get("/", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
@@ -76,22 +79,35 @@ public class UI {
 
         get("/new_book", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
+            model.put("message", validator.getErrorMessage());
+            model.put("error", validator.getValid());
             model.put("template", "templates/new_book.html");
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
         post("/new_book", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
+            
+            Boolean failed = false;
+            
             String author = request.queryParams("author");
+            if(!validator.isValid("Kirjoittaja", author)) {failed = true;}
             String title = request.queryParams("title");
+            if(!validator.isValid("Otsikko", title)) {failed = true;}
             String isbn = request.queryParams("isbn");
+            if(!validator.isValid("ISBN", isbn)) {failed = true;}
             String tags = request.queryParams("tags");
+            if(!validator.isValid("Tagit", tags)) {failed = true;}
             String desc = request.queryParams("description");
+            if(!validator.isValid("Kuvaus", desc)) {failed = true;}
 
-            Book newBook = new Book(author, title, isbn, tags, desc);
-            itemDao.create(newBook);
-
-            response.redirect("/all");
+            if(!failed) {
+                Book newBook = new Book(author, title, isbn, tags, desc);
+                itemDao.create(newBook);
+                response.redirect("/all");
+            } else {
+                response.redirect("/new_book");
+            }
 
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
@@ -108,6 +124,8 @@ public class UI {
                 if (searchResult == null) {
                     response.redirect("/all");
                 } else {
+                    model.put("message", validator.getErrorMessage());
+                    model.put("error", validator.getValid());
                     model.put("searchResult", searchResult);
                     model.put("author", searchResult.getAuthor());
                     model.put("title", searchResult.getTitle());
@@ -122,23 +140,34 @@ public class UI {
 
         post("/update/1/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            //response.redirect("/all");
+            
+            boolean failed = false;
+                    
             int id = parseId(request.params(":id"));
             if (id >= 0) {
                 Book searchResult = (Book) itemDao.read(id);
                 if (searchResult != null) {
                     String author = request.queryParams("author");
+                    if(!validator.isValid("Kirjoittaja", author)) {failed = true;}
                     String title = request.queryParams("title");
+                    if(!validator.isValid("Otsikko", title)) {failed = true;}
                     String isbn = request.queryParams("isbn");
+                    if(!validator.isValid("ISBN", isbn)) {failed = true;}
                     String tags = request.queryParams("tags");
+                    if(!validator.isValid("Tagit", tags)) {failed = true;}
                     String desc = request.queryParams("description");
+                    if(!validator.isValid("Kuvaus", desc)) {failed = true;}
 
-                    searchResult.setAuthor(author);
-                    searchResult.setTitle(title);
-                    searchResult.setIsbn(isbn);
-                    searchResult.setTags(tags);
-                    searchResult.setDescription(desc);
-                    itemDao.update((Item) searchResult);
+                    if(!failed) {
+                        searchResult.setAuthor(author);
+                        searchResult.setTitle(title);
+                        searchResult.setIsbn(isbn);
+                        searchResult.setTags(tags);
+                        searchResult.setDescription(desc);
+                        itemDao.update((Item) searchResult);
+                    } else {
+                        response.redirect("/update/1/" + request.params(":id"));
+                    }
                     model.put("searchResult", searchResult);
                     model.put("template", "templates/single_item.html");
                 }
@@ -148,22 +177,33 @@ public class UI {
 
         get("/new_link", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
+            model.put("message", validator.getErrorMessage());
+            model.put("error", validator.getValid());
             model.put("template", "templates/new_link.html");
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
         post("/new_link", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
+            
+            boolean failed = false;
 
             String author = request.queryParams("author");
+            if(!validator.isValid("Kirjoittaja", author)) {failed = true;}
             String title = request.queryParams("title");
+            if(!validator.isValid("Otsikko", title)) {failed = true;}
             String url = request.queryParams("url");
+            if(!validator.isValid("URL", url)) {failed = true;}
             String desc = request.queryParams("description");
+            if(!validator.isValid("Kuvaus", desc)) {failed = true;}
 
-            Link newLink = new Link(author, title, url, desc);
-            itemDao.create(newLink);
-
-            response.redirect("/all");
+            if(!failed) {
+                Link newLink = new Link(author, title, url, desc);
+                itemDao.create(newLink);
+                response.redirect("/all");
+            } else {
+                response.redirect("/new_link");
+            }
 
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
@@ -179,6 +219,8 @@ public class UI {
                 if (searchResult == null) {
                     response.redirect("/all");
                 }
+                model.put("message", validator.getErrorMessage());
+                model.put("error", validator.getValid());
                 model.put("searchResult", searchResult);
                 model.put("author", searchResult.getAuthor());
                 model.put("title", searchResult.getTitle());
@@ -191,6 +233,8 @@ public class UI {
 
         post("/update/2/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
+            
+            boolean failed = false;
 
             //response.redirect("/all");
             int id = parseId(request.params(":id"));
@@ -198,16 +242,23 @@ public class UI {
                 Link searchResult = (Link) itemDao.read(id);
                 if (searchResult != null) {
                     String author = request.queryParams("author");
+                    if(!validator.isValid("Kirjoittaja", author)) {failed = true;}
                     String title = request.queryParams("title");
+                    if(!validator.isValid("Otsikko", title)) {failed = true;}
                     String url = request.queryParams("url");
+                    if(!validator.isValid("URL", url)) {failed = true;}
                     String desc = request.queryParams("description");
+                    if(!validator.isValid("Kuvaus", desc)) {failed = true;}
 
-                    searchResult.setAuthor(author);
-                    searchResult.setTitle(title);
-                    searchResult.setUrl(url);
-                    searchResult.setDescription(desc);
-
-                    itemDao.update((Item) searchResult);
+                    if(!failed) {
+                        searchResult.setAuthor(author);
+                        searchResult.setTitle(title);
+                        searchResult.setUrl(url);
+                        searchResult.setDescription(desc);
+                        itemDao.update((Item) searchResult);
+                    } else {
+                        response.redirect("/update/2/" + request.params(":id"));
+                    }
                     model.put("searchResult", searchResult);
                     model.put("template", "templates/single_item.html");
                 }

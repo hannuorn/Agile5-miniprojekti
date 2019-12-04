@@ -1,5 +1,9 @@
 <h1>Lisää linkki</h1>
 
+#if($error)
+<p style="color:red;"><b>$message</b></p>
+#end
+
 <form method="POST" action="/new_link">
     <fieldset>
         Kirjoittaja: <input type="text" name="author" id="author" size="15"/>

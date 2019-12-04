@@ -1,5 +1,9 @@
 <h1>Lisää kirja</h1>
 
+#if($error)
+<p style="color:red;"><b>$message</b></p>
+#end
+
 <form method="POST" action="/new_book">
     <fieldset>
         Kirjoittaja: <input type="text" name="author" id="author" size="15"/>

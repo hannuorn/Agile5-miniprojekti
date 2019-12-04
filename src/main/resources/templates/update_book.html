@@ -1,5 +1,9 @@
 <h1>Muokkaa kirjaa</h1>
 
+#if($error)
+<p style="color:red;"><b>$message</b></p>
+#end
+
 <form method="POST" action="">
     <fieldset>
         Kirjoittaja: <input type="text" value="${author}" name="author" id="author" size="15"/>
