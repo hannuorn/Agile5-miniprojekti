@@ -10,6 +10,7 @@ import domain.Item;
 import domain.Book;
 import domain.Filter;
 import domain.Link;
+import domain.VideoParser;
 import java.util.List;
 
 public class UI {
@@ -17,6 +18,7 @@ public class UI {
     private DAO<Item, Integer> itemDao;
     static String LAYOUT = "templates/layout.html";
     private Filter filter;
+    private VideoParser videoParser;
 
     private int parseId(String idString) {
         int id;
@@ -31,6 +33,7 @@ public class UI {
     public UI(DAO<Item, Integer> itemDao) {
         this.itemDao = itemDao;
         this.filter = new Filter(itemDao);
+        this.videoParser = new VideoParser();
 
         get("/", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
@@ -56,11 +59,12 @@ public class UI {
                 if (searchResult == null) {
                     response.redirect("/all");
                 } else {
-                    if(searchResult.getClass().toString().equals("class domain.Link")) {
+                    if(searchResult.getIsVideo()) {
                         model.put("video", "on");
                         Link link = (Link)searchResult;
                         String url = link.getUrl();
-                        model.put("url", "url");
+                        String embed = videoParser.parse(url);
+                        model.put("url", embed);
                     } else {
                         model.put("video", "off");
                     }
@@ -173,14 +177,13 @@ public class UI {
             String checkboxData = request.queryParams("isVideo");
             Boolean isVideo = false;
             
-            System.out.println(checkboxData);
-            
             if(checkboxData != null && checkboxData.equals("on")) {
                 isVideo = true;
             }
 
             Link newLink = new Link(author, title, url, desc, isVideo);
             itemDao.create(newLink);
+            System.out.println(newLink.getIsVideo());
 
             response.redirect("/all");
 
@@ -204,9 +207,9 @@ public class UI {
                 model.put("title", searchResult.getTitle());
                 model.put("url", searchResult.getUrl());
                 model.put("description", searchResult.getDescription());
-                if(searchResult.getIsVideo() == true) {
-                    System.out.println("cheese");
-                    model.put("checked", "true");
+                System.out.println(searchResult.getIsVideo());
+                if(searchResult.getIsVideo()) {
+                    model.put("checked", "checked");
                 }
                 model.put("template", "templates/update_link.html");
             }

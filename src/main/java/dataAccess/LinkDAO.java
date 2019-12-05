@@ -70,7 +70,7 @@ public class LinkDAO implements DAO<Link, Integer> {
             "title = :title, " +
             "url = :url, " +
             "description = :description, " + 
-            "read = :read " +
+            "read = :read, " +
             "video = :video " +
             "WHERE (id = :id);"; 
         

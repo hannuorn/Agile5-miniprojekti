@@ -35,7 +35,8 @@ public class DB {
                 "isbn VARCHAR(40)," +
                 "tags VARCHAR(40)," +
                 "description VARCHAR(40)," +
-                "url VARCHAR(40));";
+                "url VARCHAR(40)," +
+                "video INTEGER);";
         executeQuery(sql);
     }
     
@@ -54,7 +55,8 @@ public class DB {
                 "isbn VARCHAR(40)," +
                 "tags VARCHAR(40)," +
                 "description VARCHAR(40)," +
-                "url VARCHAR(40));";
+                "url VARCHAR(40)," +
+                "video INTEGER);";
         executeQuery(sql);
     }
     
@@ -65,7 +67,7 @@ public class DB {
             
             if (System.getenv("DATABASE_URL") == null) {
                 sql2o = new Sql2o("jdbc:sqlite:vinkkikirjasto.db", null, null);
-                createTablesSqlite();
+                //createTablesSqlite();
             } else {
                 dbUri = new URI(System.getenv("DATABASE_URL"));
                 final int port = dbUri.getPort();

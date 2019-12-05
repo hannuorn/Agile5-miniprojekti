@@ -14,4 +14,5 @@ public interface Item {
     
     public ItemType getType();
     
+    public Boolean getIsVideo();
 }

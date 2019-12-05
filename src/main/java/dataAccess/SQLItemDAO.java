@@ -47,6 +47,10 @@ public class SQLItemDAO implements DAO<Item, Integer> {
                 if (row.getInteger("read") != 0) {
                     read = true;
                 }
+                boolean video = false;
+                if (row.getInteger("video") != 0) {
+                    video = true;
+                }
                 switch (type) {
                     case BOOK:
                         String isbn = row.getString("isbn");
@@ -58,7 +62,7 @@ public class SQLItemDAO implements DAO<Item, Integer> {
                         break;
                     case LINK:
                         String url = row.getString("url");
-                        Link link = new Link(author, title, url, description, false); //REPLACE FALSE WITH isVideo value!!!!
+                        Link link = new Link(author, title, url, description, video);
                         link.setId(id);
                         link.setRead(read);
                         items.add(link);
@@ -104,18 +108,22 @@ public class SQLItemDAO implements DAO<Item, Integer> {
                 if (row.getInteger("read") != 0) {
                     read = true;
                 }
+                boolean video = false;
+                if (row.getInteger("video") != 0) {
+                    video = true;
+                }
                 switch (type) {
                     case BOOK:
                         String isbn = row.getString("isbn");
                         String tags = row.getString("tags");
-                        Book book = new Book(author, title, isbn, tags, description); //REPLACE FALSE WITH isVideo value!!!!
+                        Book book = new Book(author, title, isbn, tags, description);
                         book.setId(id);
                         book.setRead(read);
                         item = book;
                         break;
                     case LINK:
                         String url = row.getString("url");
-                        Link link = new Link(author, title, url, description, false);
+                        Link link = new Link(author, title, url, description, video);
                         link.setId(id);
                         link.setRead(read);
                         item = link;
