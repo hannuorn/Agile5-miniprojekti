@@ -6,15 +6,15 @@
 
 <form method="POST" action="/new_book">
     <fieldset>
-        Kirjoittaja: <input type="text" name="author" id="author" size="15"/>
+        Kirjoittaja: <input type="text" name="author" value="$author" id="author" size="15"/>
         <br/>
-        Otsikko: <input type="text" name="title" id="title" size="15"/>
+        Otsikko: <input type="text" name="title" value="$title" id="title" size="15"/>
         <br/> 
-        ISBN: <input type="text" name="isbn" id="isbn" size="15"/>
+        ISBN: <input type="text" name="isbn" value="$isbn" id="isbn" size="15"/>
         <br/>  
-        Tagit: <input type="text" name="tags" id="tags" size="15"/>
+        Tagit: <input type="text" name="tags" value="$tags" id="tags" size="15"/>
         <br/>  
-        Kuvaus: <input type="text" name="description" id="description" size="15"/>
+        Kuvaus: <input type="text" name="description" value="$description" id="description" size="15"/>
         <br/> 
         <input name="lisaa" type="submit" value="Lisää" />
     </fieldset>
