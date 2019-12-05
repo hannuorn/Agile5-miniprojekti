@@ -83,6 +83,11 @@ public class UI {
             HashMap<String, Object> model = new HashMap<>();
             model.put("message", validator.getErrorMessage());
             model.put("error", validator.getValid());
+            model.put("author", "");
+            model.put("title", "");
+            model.put("isbn", "");
+            model.put("tags", "");
+            model.put("description", "");
             model.put("template", "templates/new_book.html");
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
@@ -108,7 +113,14 @@ public class UI {
                 itemDao.create(newBook);
                 response.redirect("/");
             } else {
-                response.redirect("/new_book");
+                model.put("message", validator.getErrorMessage());
+                model.put("error", validator.getValid());
+                model.put("author", author);
+                model.put("title", title);
+                model.put("isbn", isbn);
+                model.put("tags", tags);
+                model.put("description", desc);
+                model.put("template", "templates/new_book.html");
             }
 
             return new ModelAndView(model, LAYOUT);
