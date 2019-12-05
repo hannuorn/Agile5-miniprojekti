@@ -19,6 +19,15 @@ dependencies{
     testCompile 'junit:junit:4.12'
     testCompile 'io.cucumber:cucumber-java:4.7.4'
     testCompile 'io.cucumber:cucumber-junit:4.7.4'
+     compile group: 'com.sparkjava', name: 'spark-core', version: '2.7.1'
+    compile group: 'com.sparkjava', name: 'spark-template-velocity', version: '2.7.1'
+    testCompile group: 'org.fluentlenium', name: 'fluentlenium-core', version: '4.3.0'
+    testCompile group: 'org.fluentlenium', name: 'fluentlenium-assertj', version: '4.3.0' 
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: '3.14.0'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version:'3.14.0'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version:'3.14.0'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version:'3.14.0'  
+    compile group: 'org.seleniumhq.selenium', name: 'htmlunit-driver', version: '2.33.0'
 }
 
 applicationName = 'vinkkikirjasto'
