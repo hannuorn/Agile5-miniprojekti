@@ -37,7 +37,7 @@ public class UI {
     public UI(DAO<Item, Integer> itemDao) {
         this.itemDao = itemDao;
         this.filter = new Filter(itemDao);
-        this.validator = new Validator();
+        this.validator = new Validator(3, 80);
         this.bookFinder = new BookFinder();
         this.videoParser = new VideoParser();
         

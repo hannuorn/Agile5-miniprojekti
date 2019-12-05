@@ -7,11 +7,14 @@ import org.junit.Test;
 
 public class ValidatorTest {
     
+    private final int minLength = 3;
+    private final int maxLength = 20;
+    
     Validator validator;
     
     @Before
     public void setUp() {
-        validator = new Validator();
+        validator = new Validator(minLength, maxLength);
     }
     
     @Test
@@ -24,13 +27,17 @@ public class ValidatorTest {
     public void rejectsTooShort() {
         validator.isValid("Nimi", "a");
         assertEquals(validator.getValid(), false);
-        assertEquals(validator.getErrorMessage(), "Nimi -kentän tulee olla vähintään 3 merkkiä pitkä.");
+        assertEquals(validator.getErrorMessage(), 
+                "Nimi -kentän tulee olla vähintään " + 
+                minLength + " merkkiä pitkä.");
     }
     
     @Test
     public void rejectsTooLong() {
         validator.isValid("Nimi", "tämäonaivanliianpitkänimeksitälletestille");
         assertEquals(validator.getValid(), false);
-        assertEquals(validator.getErrorMessage(), "Nimi -kentän tulee olla enintään 20 merkkiä pitkä.");
+        assertEquals(validator.getErrorMessage(), 
+                "Nimi -kentän tulee olla enintään " + 
+                maxLength + " merkkiä pitkä.");
     }
 }
