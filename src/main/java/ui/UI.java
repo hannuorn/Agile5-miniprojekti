@@ -256,7 +256,7 @@ public class UI {
                 model.put("template", "templates/new_link.html");
             }
             
-            response.redirect("/all");
+            response.redirect("/");
 
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
