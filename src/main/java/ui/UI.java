@@ -1,5 +1,6 @@
 package ui;
 
+import dataAccess.BookFinder;
 import java.util.HashMap;
 import spark.ModelAndView;
 import static spark.Spark.*;
@@ -19,6 +20,7 @@ public class UI {
     static String LAYOUT = "templates/layout.html";
     private Filter filter;
     private Validator validator;
+    private BookFinder bookFinder;
 
     private int parseId(String idString) {
         int id;
@@ -34,9 +36,13 @@ public class UI {
         this.itemDao = itemDao;
         this.filter = new Filter(itemDao);
         this.validator = new Validator();
+        this.bookFinder = new BookFinder();
         
         get("/", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
+            Book testi = bookFinder.findBookByISBN("9781904233657");
+            System.out.println(testi.getInfo());
+            
             model.put("list", itemDao.list());
             model.put("template", "templates/all.html");
             return new ModelAndView(model, LAYOUT);
