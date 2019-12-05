@@ -100,4 +100,9 @@ public class Book implements Item {
     public void changeRead(){
         this.read = !this.read;
     }
+
+    @Override
+    public Boolean getIsVideo() {
+        return false; 
+    }
 }

@@ -19,8 +19,13 @@ public class LinkDAO implements DAO<Link, Integer> {
     @Override
     public void create(Link link) {
         String sql =
-            "INSERT INTO Item (type, read, author, title, url, description) " +
-            "VALUES (:type, :read, :author, :title, :url, :description);";
+            "INSERT INTO Item (type, read, author, title, url, description, video) " +
+            "VALUES (:type, :read, :author, :title, :url, :description, :video);";
+        
+        int video = 0;
+        if (link.getIsVideo()) {
+            video = 1;
+        }
 
         try (Connection con = DB.sql2o.open()) {
             Integer key = con.createQuery(sql, true)
@@ -30,6 +35,7 @@ public class LinkDAO implements DAO<Link, Integer> {
                 .addParameter("title", link.getTitle())
                 .addParameter("url", link.getUrl())
                 .addParameter("description", link.getDescription())
+                .addParameter("video", video)
                 .executeUpdate()
                 .getKey(Integer.class);
             link.setId(key);
@@ -64,12 +70,18 @@ public class LinkDAO implements DAO<Link, Integer> {
             "title = :title, " +
             "url = :url, " +
             "description = :description, " + 
-            "read = :read " +
+            "read = :read, " +
+            "video = :video " +
             "WHERE (id = :id);"; 
         
         int read = 0;
         if (link.isRead()) {
             read = 1;
+        }
+        
+        int video = 0;
+        if (link.getIsVideo()) {
+            video = 1;
         }
         
         try (Connection con = DB.sql2o.open()) {
@@ -80,6 +92,8 @@ public class LinkDAO implements DAO<Link, Integer> {
                 .addParameter("url", link.getUrl())
                 .addParameter("description", link.getDescription())
                 .addParameter("read", read)
+                .addParameter("video", video)
+                    
                 .executeUpdate();
         }
         return true;

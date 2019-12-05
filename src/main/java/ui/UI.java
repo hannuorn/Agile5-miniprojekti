@@ -12,6 +12,7 @@ import domain.Book;
 import domain.Filter;
 import domain.Link;
 import domain.Validator;
+import domain.VideoParser;
 import java.util.List;
 
 public class UI {
@@ -21,6 +22,7 @@ public class UI {
     private Filter filter;
     private Validator validator;
     private BookFinder bookFinder;
+    private VideoParser videoParser;
 
     private int parseId(String idString) {
         int id;
@@ -37,6 +39,7 @@ public class UI {
         this.filter = new Filter(itemDao);
         this.validator = new Validator();
         this.bookFinder = new BookFinder();
+        this.videoParser = new VideoParser();
         
         get("/", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
@@ -67,6 +70,16 @@ public class UI {
                 if (searchResult == null) {
                     response.redirect("/");
                 } else {
+                    if(searchResult.getIsVideo()) {
+                        model.put("video", "on");
+                        Link link = (Link)searchResult;
+                        String url = link.getUrl();
+                        String embed = videoParser.parse(url);
+                        model.put("url", embed);
+                    } else {
+                        model.put("video", "off");
+                    }
+                    
                     model.put("searchResult", searchResult);
                     model.put("template", "templates/single_item.html");
                 }
@@ -132,6 +145,7 @@ public class UI {
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
+        //Update book
         get("/update/1/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
 
@@ -158,6 +172,7 @@ public class UI {
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
+        //Update book
         post("/update/1/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             
@@ -220,9 +235,15 @@ public class UI {
             if(!validator.isValid("URL", url)) {failed = true;}
             String desc = request.queryParams("description");
             if(!validator.isValid("Kuvaus", desc)) {failed = true;}
+            String checkboxData = request.queryParams("isVideo");
+            Boolean isVideo = false;
+            
+            if(checkboxData != null && checkboxData.equals("on")) {
+                isVideo = true;
+            }
 
             if(!failed) {
-                Link newLink = new Link(author, title, url, desc);
+                Link newLink = new Link(author, title, url, desc, isVideo);
                 itemDao.create(newLink);
                 response.redirect("/");
             } else {
@@ -234,10 +255,13 @@ public class UI {
                 model.put("description", desc);
                 model.put("template", "templates/new_link.html");
             }
+            
+            response.redirect("/all");
 
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
+        //Update link
         get("/update/2/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
 
@@ -256,11 +280,16 @@ public class UI {
                 model.put("title", searchResult.getTitle());
                 model.put("url", searchResult.getUrl());
                 model.put("description", searchResult.getDescription());
+                System.out.println(searchResult.getIsVideo());
+                if(searchResult.getIsVideo()) {
+                    model.put("checked", "checked");
+                }
                 model.put("template", "templates/update_link.html");
             }
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
+        //Update link
         post("/update/2/:id", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             
@@ -277,17 +306,25 @@ public class UI {
                     String url = request.queryParams("url");
                     if(!validator.isValid("URL", url)) {failed = true;}
                     String desc = request.queryParams("description");
-                    if(!validator.isValid("Kuvaus", desc)) {failed = true;}
+                    
+                    String checkboxData = request.queryParams("isVideo");
+                    Boolean isVideo = false;
+                    
+                    if(checkboxData != null && checkboxData.equals("on")) {
+                        isVideo = true;
+                    }
 
                     if(!failed) {
                         searchResult.setAuthor(author);
                         searchResult.setTitle(title);
                         searchResult.setUrl(url);
                         searchResult.setDescription(desc);
+                        searchResult.setIsVideo(isVideo);
                         itemDao.update((Item) searchResult);
                     } else {
                         response.redirect("/update/2/" + request.params(":id"));
                     }
+
                     model.put("searchResult", searchResult);
                     model.put("template", "templates/single_item.html");
                 }

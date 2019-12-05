@@ -17,7 +17,7 @@ public class FilterTest {
         dao = new MemoryItemDAO();
         dao.create(new Book("Robert Martin", "Clean Code: A Handbook of Agile Software Craftsmanship", "978-0132350884", "Ohjelmointi, design patterns", "TKT20006 Ohjelmistotuotanto"));
         dao.create(new Book("Kirjoittaja", "Testikirja", "123456", "ohjelmointi", "Tämä on kirja."));
-        dao.create(new Link("Kirjoittaja", "Testilinkki", "www.testisivu.net", "Tässä linkkinen!"));
+        dao.create(new Link("Kirjoittaja", "Testilinkki", "www.testisivu.net", "Tässä linkkinen!", false));
         filter = new Filter(dao);
     }
     

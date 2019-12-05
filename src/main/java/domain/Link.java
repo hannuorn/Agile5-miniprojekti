@@ -8,15 +8,16 @@ public class Link implements Item {
     private String url;
     private String description;
     private Boolean read;
-    //private String linkType; ??
+    private Boolean isVideo;
 
-    public Link(String author, String title, String url, String description) {
+    public Link(String author, String title, String url, String description, Boolean isVideo) {
         this.id = id;
         this.author = author;
         this.title = title;
         this.url = url;
         this.description = description;
         this.read = false;
+        this.isVideo = isVideo;
     }
 
     @Override
@@ -94,5 +95,13 @@ public class Link implements Item {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Boolean getIsVideo() {
+        return isVideo;
+    }
+
+    public void setIsVideo(Boolean isVideo) {
+        this.isVideo = isVideo;
     }
 }
