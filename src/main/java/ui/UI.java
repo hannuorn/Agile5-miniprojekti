@@ -55,11 +55,11 @@ public class UI {
 
             int id = parseId(request.params(":id"));
             if (id < 0) {
-                response.redirect("/all");
+                response.redirect("/");
             } else {
                 Item searchResult = itemDao.read(id);
                 if (searchResult == null) {
-                    response.redirect("/all");
+                    response.redirect("/");
                 } else {
                     model.put("searchResult", searchResult);
                     model.put("template", "templates/single_item.html");
@@ -75,7 +75,7 @@ public class UI {
             if (id >= 0) {
                 itemDao.remove(id);
             }
-            response.redirect("/all");
+            response.redirect("/");
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
@@ -106,7 +106,7 @@ public class UI {
             if(!failed) {
                 Book newBook = new Book(author, title, isbn, tags, desc);
                 itemDao.create(newBook);
-                response.redirect("/all");
+                response.redirect("/");
             } else {
                 response.redirect("/new_book");
             }
@@ -119,12 +119,12 @@ public class UI {
 
             int id = parseId(request.params(":id"));
             if (id < 0) {
-                response.redirect("/all");
+                response.redirect("/");
             } else {
                 Book searchResult = (Book) itemDao.read(id);
 
                 if (searchResult == null) {
-                    response.redirect("/all");
+                    response.redirect("/");
                 } else {
                     model.put("message", validator.getErrorMessage());
                     model.put("error", validator.getValid());
@@ -181,6 +181,10 @@ public class UI {
             HashMap<String, Object> model = new HashMap<>();
             model.put("message", validator.getErrorMessage());
             model.put("error", validator.getValid());
+            model.put("author", "");
+            model.put("title", "");
+            model.put("url", "");
+            model.put("description", "");
             model.put("template", "templates/new_link.html");
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
@@ -202,9 +206,15 @@ public class UI {
             if(!failed) {
                 Link newLink = new Link(author, title, url, desc);
                 itemDao.create(newLink);
-                response.redirect("/all");
+                response.redirect("/");
             } else {
-                response.redirect("/new_link");
+                model.put("message", validator.getErrorMessage());
+                model.put("error", validator.getValid());
+                model.put("author", author);
+                model.put("title", title);
+                model.put("url", url);
+                model.put("description", desc);
+                model.put("template", "templates/new_link.html");
             }
 
             return new ModelAndView(model, LAYOUT);
@@ -215,11 +225,11 @@ public class UI {
 
             int id = parseId(request.params(":id"));
             if (id < 0) {
-                response.redirect("/all");
+                response.redirect("/");
             } else {
                 Link searchResult = (Link) itemDao.read(id);
                 if (searchResult == null) {
-                    response.redirect("/all");
+                    response.redirect("/");
                 }
                 model.put("message", validator.getErrorMessage());
                 model.put("error", validator.getValid());
@@ -238,7 +248,6 @@ public class UI {
             
             boolean failed = false;
 
-            //response.redirect("/all");
             int id = parseId(request.params(":id"));
             if (id >= 0) {
                 Link searchResult = (Link) itemDao.read(id);
