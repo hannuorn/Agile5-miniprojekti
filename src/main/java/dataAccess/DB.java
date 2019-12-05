@@ -28,14 +28,14 @@ public class DB {
         sql = 
             "CREATE TABLE Item(" +
                 "id SERIAL PRIMARY KEY, " +
-                "type VARCHAR(20)," +
+                "type INTEGER," +
                 "read INTEGER," +
-                "author VARCHAR(40)," +
-                "title VARCHAR(40)," +
-                "isbn VARCHAR(40)," +
-                "tags VARCHAR(40)," +
-                "description VARCHAR(40)," +
-                "url VARCHAR(40)," +
+                "author VARCHAR(80)," +
+                "title VARCHAR(80)," +
+                "isbn VARCHAR(80)," +
+                "tags VARCHAR(80)," +
+                "description VARCHAR(80)," +
+                "url VARCHAR(80)," +
                 "video INTEGER);";
         executeQuery(sql);
     }
@@ -48,14 +48,14 @@ public class DB {
         sql = 
             "CREATE TABLE Item(" +
                 "id INTEGER PRIMARY KEY, " +
-                "type VARCHAR(20)," +
+                "type INTEGER," +
                 "read INTEGER," +
-                "author VARCHAR(40)," +
-                "title VARCHAR(40)," +
-                "isbn VARCHAR(40)," +
-                "tags VARCHAR(40)," +
-                "description VARCHAR(40)," +
-                "url VARCHAR(40)," +
+                "author VARCHAR(80)," +
+                "title VARCHAR(80)," +
+                "isbn VARCHAR(80)," +
+                "tags VARCHAR(80)," +
+                "description VARCHAR(80)," +
+                "url VARCHAR(80)," +
                 "video INTEGER);";
         executeQuery(sql);
     }
