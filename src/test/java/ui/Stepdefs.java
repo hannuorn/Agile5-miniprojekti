@@ -24,20 +24,20 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 public class Stepdefs {
 
-    WebDriver driver = new ChromeDriver();
+    WebDriver driver = new HtmlUnitDriver();
     
     String baseUrl = "http://localhost:4567";
 
     @Given("Page for entering new book is selected")
     public void newBookIsSelected() {
         driver.get(baseUrl + "/new_book");
-        sleep(2);
+ 
     }
 
     @When("valid writer {string} and Title {string} and ISBN {string} and Tag {string} and Description {string} are entered")
     public void correctBookIsEntered(String writer, String title, String isbn, String tags, String desc) {
         createBookWith(writer, title, isbn, tags, desc);
-        sleep(2);
+  
     }
 
     private void createBookWith(String writer, String title, String isbn, String tags, String desc) {
@@ -59,7 +59,6 @@ public class Stepdefs {
 
     @Then("Listing of all books shows the title {string}")
     public void bookIsAdded(String title) {
-        sleep(2);
         assertTrue(driver.getPageSource().contains(title));
     }
 
