@@ -332,5 +332,16 @@ public class UI {
             
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
+        
+        post("/autofill", (request, response) -> {
+            HashMap<String, Object> model = new HashMap<>();
+            String isbn = request.queryParams("isbn");
+            Book book = bookFinder.findBookByISBN(isbn);
+            itemDao.create(book);
+            String url = "/update/1/" + book.getId();
+            response.redirect(url);
+            
+            return new ModelAndView(model, LAYOUT);
+        }, new VelocityTemplateEngine());
     }
 }

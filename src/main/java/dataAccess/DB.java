@@ -65,7 +65,7 @@ public class DB {
             
             if (System.getenv("DATABASE_URL") == null) {
                 sql2o = new Sql2o("jdbc:sqlite:vinkkikirjasto.db", null, null);
-                createTablesSqlite();
+ //               createTablesSqlite();
             } else {
                 dbUri = new URI(System.getenv("DATABASE_URL"));
                 final int port = dbUri.getPort();
