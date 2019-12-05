@@ -40,7 +40,7 @@ public class UI {
         
         get("/", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            Book testi = bookFinder.findBookByISBN("9781904233657");
+            Book testi = bookFinder.findBookByISBN("9781118951309");
             System.out.println(testi.getInfo());
             
             model.put("list", itemDao.list());

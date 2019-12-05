@@ -11,6 +11,7 @@ import com.google.api.services.books.model.Volumes;
 import domain.Book;
 import java.util.ArrayList;
 
+
 public class BookFinder {
 
     private static final String APPLICATION_NAME = "Agile5-Vinkkikirjasto/1.0";
@@ -35,17 +36,19 @@ public class BookFinder {
 
         for (Volume volume : volumes.getItems()) {
             Volume.VolumeInfo volumeInfo = volume.getVolumeInfo();
-            String authors = "";
-            if(volumeInfo.getAuthors() != null && !volumeInfo.getAuthors().isEmpty()) {
-                for (int i = 0; i < volume.getVolumeInfo().size(); ++i) {
-                    if(volume.getVolumeInfo().get(i) != null) {
-                    authors += volume.getVolumeInfo().get(i);
-                    authors += " ";
+            String authorString = "";
+            java.util.List<String> authors = volumeInfo.getAuthors();
+            
+            if(authors != null && !authors.isEmpty()) {
+                for (int i = 0; i < authors.size(); ++i) {
+                    if(authors.get(i) != null) {
+                    authorString += authors.get(i);
+                    authorString += " ";
                     }
                 }
             }
             
-            foundBooks.add(new Book(authors, volumeInfo.getTitle(), isbn, "", ""));
+            foundBooks.add(new Book(authorString, volumeInfo.getTitle(), isbn, "", ""));
         }
         
         if(foundBooks.size() >= 1) {
