@@ -22,6 +22,6 @@ public class Main {
 
         DAO<Item, Integer> itemDao = new SQLItemDAO();
         
-        UI ui = new UI(itemDao);
+        new UI(itemDao);
     }
 }
