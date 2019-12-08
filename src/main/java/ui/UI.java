@@ -54,6 +54,9 @@ public class UI {
         post("/search", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             List<Item> foundItems = filter.searchAll(request.queryParams("search"));
+            if (foundItems.isEmpty()) {
+                model.put("isEmpty", true);
+            }
             model.put("searched", true);
             model.put("list", foundItems);
             model.put("template", "templates/all.html");
