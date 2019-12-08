@@ -28,32 +28,33 @@ public class Stepdefs {
 
     String baseUrl = "http://localhost:4567";
 
+    @Given("There are books stored in the application")
+    public void thereAreBooksStoredInTheApplication() {
+        createNewBookIsSelected();
+        createBookWith("Matti", "Ohjelmistotuotanto", "111AA", "syksy2019", "Tärkeää");
+        createNewBookIsSelected();
+        createBookWith("Pekka", "Tietorakenteet ja algoritmit", "2AAAA", "syksy 2019", "vaikeaa");
+    }
+
+    @When("User opens the application")
+    public void userOpensTheApplication() {
+        driver.get(baseUrl);
+    }
+
+    @Then("User can see a list of all books")
+    public void userCanSeeAListOfAllBooks() {
+        assertTrue(driver.getPageSource().contains("Ohjelmistotuotanto"));
+        assertTrue(driver.getPageSource().contains("Tietorakenteet ja algoritmit"));
+    }
+
     @Given("Page for entering new book is selected")
     public void newBookIsSelected() {
-        driver.get(baseUrl + "/new_book");
-
+        createNewBookIsSelected();
     }
 
     @When("valid writer {string} and Title {string} and ISBN {string} and Tag {string} and Description {string} are entered")
     public void correctBookIsEntered(String writer, String title, String isbn, String tags, String desc) {
         createBookWith(writer, title, isbn, tags, desc);
-
-    }
-
-    private void createBookWith(String writer, String title, String isbn, String tags, String desc) {
-        WebElement element = driver.findElement(By.name("author"));
-        element.sendKeys(writer);
-        element = driver.findElement(By.name("title"));
-        element.sendKeys(title);
-        element = driver.findElement(By.name("isbn"));
-        element.sendKeys(isbn);
-        element = driver.findElement(By.name("tags"));
-        element.sendKeys(tags);
-        element = driver.findElement(By.name("description"));
-        element.sendKeys(desc);
-        element = driver.findElement(By.name("lisaa"));
-        sleep(2);
-        element.submit();
 
     }
 
@@ -73,7 +74,7 @@ public class Stepdefs {
 
     @Then("Listing of all books does not show the title {string}")
     public void listingOfAllBooksDoesNotShowTheTitle(String title) {
-         assertTrue(!driver.getPageSource().contains(title));
+        assertTrue(!driver.getPageSource().contains(title));
     }
 
     @After
@@ -81,11 +82,32 @@ public class Stepdefs {
         driver.quit();
     }
 
+    private void createNewBookIsSelected() {
+        driver.get(baseUrl + "/new_book");
+    }
+
     private void sleep(int n) {
         try {
             Thread.sleep(n * 1000);
         } catch (Exception e) {
         }
+    }
+
+    private void createBookWith(String writer, String title, String isbn, String tags, String desc) {
+        WebElement element = driver.findElement(By.name("author"));
+        element.sendKeys(writer);
+        element = driver.findElement(By.name("title"));
+        element.sendKeys(title);
+        element = driver.findElement(By.name("isbn"));
+        element.sendKeys(isbn);
+        element = driver.findElement(By.name("tags"));
+        element.sendKeys(tags);
+        element = driver.findElement(By.name("description"));
+        element.sendKeys(desc);
+        element = driver.findElement(By.name("lisaa"));
+        sleep(2);
+        element.submit();
+
     }
 
 }
