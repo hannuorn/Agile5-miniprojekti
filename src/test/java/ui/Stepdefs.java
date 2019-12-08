@@ -55,6 +55,11 @@ public class Stepdefs {
     public void thereAreBooksStoredInTheApplication() {
         createInitialBooks();
     }
+    
+    @Given("There are links stored in the application")
+    public void thereAreLinksStoredInTheApplication() {
+        createInitialLinks();
+    }
 
     @When("User opens the application")
     public void userOpensTheApplication() {
@@ -124,6 +129,23 @@ public class Stepdefs {
         String textbox = element.getAttribute("value");
         assertTrue(textbox.contains(author));
     }
+    
+    @When("Title {string} is written in the search field")
+    public void titleIsWrittenInTheSearchFiled(String title) {
+        WebElement element = driver.findElement(By.id("search"));
+        element.sendKeys(title);
+    }
+    
+    @When("Author {string} is written in the search field")
+    public void authorIsWrittenInTheSearchField(String author) {
+        WebElement element = driver.findElement(By.id("search"));
+        element.sendKeys(author);
+    }
+    
+    @Then("Listing of searched items shows the title {string}")
+    public void searchedTitleIsShown(String title) {
+        assertTrue(driver.getPageSource().contains(title));
+    }
 
     @After
     public void tearDown() {
@@ -135,6 +157,13 @@ public class Stepdefs {
         createBookWith("Matti", "Ohjelmistotuotanto", "111AA", "syksy2019", "Tärkeää");
         createNewBookIsSelected();
         createBookWith("Pekka", "Tietorakenteet ja algoritmit", "2AAAA", "syksy 2019", "vaikeaa");
+    }
+    
+    private void createInitialLinks() {
+        createNewLinkIsSelected();
+        createLinkWith("Matti", "Blogiteksti", "www.testi.net", "havainnollistava", false);
+        createNewLinkIsSelected();
+        createLinkWith("Maija", "Artikkeli", "www.artikkeli.com", "vaikuttaa hyvältä", false);
     }
 
     private void createNewBookIsSelected() {
