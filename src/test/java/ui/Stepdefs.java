@@ -55,7 +55,7 @@ public class Stepdefs {
     public void thereAreBooksStoredInTheApplication() {
         createInitialBooks();
     }
-    
+
     @Given("There are links stored in the application")
     public void thereAreLinksStoredInTheApplication() {
         createInitialLinks();
@@ -90,12 +90,12 @@ public class Stepdefs {
     @When("valid writer {string} and Title {string} and URL {string} and Description {string} isVideo {int} for link are entered")
     public void correctLinkIsEntered(String writer, String title, String url, String desc, int isVideo) {
         boolean video = false;
-        if(isVideo >= 1) {
+        if (isVideo >= 1) {
             video = true;
         }
         createLinkWith(writer, title, url, desc, video);
     }
-    
+
     @When("valid isbn {string} is added to text box and search button is clicked")
     public void bookSearchedByISBN(String isbn) {
         WebElement element = driver.findElement(By.id("isbn2"));
@@ -122,31 +122,25 @@ public class Stepdefs {
     public void listingOfAllBooksDoesNotShowTheTitle(String title) {
         assertTrue(!driver.getPageSource().contains(title));
     }
-    
+
     @Then("addition form shows the author {string}")
     public void additionFormShowsTheAuthor(String author) {
         WebElement element = driver.findElement(By.id("author"));
         String textbox = element.getAttribute("value");
         assertTrue(textbox.contains(author));
     }
-    
-    @When("Title {string} is written in the search field")
-    public void titleIsWrittenInTheSearchFiled(String title) {
+
+    @When("Searched string {string} is written in the search field")
+    public void titleIsWrittenInTheSearchFiled(String string) {
         WebElement element = driver.findElement(By.id("search"));
-        element.sendKeys(title);
+        element.sendKeys(string);
     }
-    
-    @When("Author {string} is written in the search field")
-    public void authorIsWrittenInTheSearchField(String author) {
-        WebElement element = driver.findElement(By.id("search"));
-        element.sendKeys(author);
-    }
-    
+
     @Then("Listing of searched items shows the title {string}")
     public void searchedTitleIsShown(String title) {
         assertTrue(driver.getPageSource().contains(title));
     }
-
+    
     @After
     public void tearDown() {
         driver.quit();
@@ -158,7 +152,7 @@ public class Stepdefs {
         createNewBookIsSelected();
         createBookWith("Pekka", "Tietorakenteet ja algoritmit", "2AAAA", "syksy 2019", "vaikeaa");
     }
-    
+
     private void createInitialLinks() {
         createNewLinkIsSelected();
         createLinkWith("Matti", "Blogiteksti", "www.testi.net", "havainnollistava", false);
