@@ -50,13 +50,13 @@ public class FilterTest {
     }
     
     @Test
-    public void filteringReadItemsReturnCorrectNumberOfItems() {
+    public void filteringReadItemsReturnsCorrectNumberOfItems() {
         dao.read(dao.list().get(0).getId()).changeRead();
         assertEquals(1, filter.filterReadStatus(true).size());
     }
     
     @Test
-    public void filteringUnreadItemsReturnCorrectNumberOfItems() {
+    public void filteringUnreadItemsReturnsCorrectNumberOfItems() {
         dao.read(dao.list().get(0).getId()).changeRead();
         assertEquals(2, filter.filterReadStatus(false).size());
     }
@@ -71,5 +71,10 @@ public class FilterTest {
         for (Item i : lista) {
             assertEquals(true, i.isRead());
         }
+    }
+    
+    @Test
+    public void searchingForItemsReturnsCorrectNumberOfItems() {
+        assertEquals(2, filter.searchAll("Kirjoittaja").size());
     }
 }
