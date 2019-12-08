@@ -30,6 +30,11 @@ dependencies{
     compile group: 'org.seleniumhq.selenium', name: 'htmlunit-driver', version: '2.33.0'
 }
 
+test {
+    testLogging.showStandardStreams = true
+    systemProperties System.getProperties()
+}
+
 applicationName = 'vinkkikirjasto'
 mainClassName = 'Main'
 task stage(dependsOn: ['clean', 'installDist'])
