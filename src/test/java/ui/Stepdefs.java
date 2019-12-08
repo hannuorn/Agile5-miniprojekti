@@ -25,19 +25,19 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 public class Stepdefs {
 
     WebDriver driver = new HtmlUnitDriver();
-    
+
     String baseUrl = "http://localhost:4567";
 
     @Given("Page for entering new book is selected")
     public void newBookIsSelected() {
         driver.get(baseUrl + "/new_book");
- 
+
     }
 
     @When("valid writer {string} and Title {string} and ISBN {string} and Tag {string} and Description {string} are entered")
     public void correctBookIsEntered(String writer, String title, String isbn, String tags, String desc) {
         createBookWith(writer, title, isbn, tags, desc);
-  
+
     }
 
     private void createBookWith(String writer, String title, String isbn, String tags, String desc) {
@@ -64,6 +64,16 @@ public class Stepdefs {
 
     private void pageHasContent(String content) {
         assertTrue(driver.getPageSource().contains(content));
+    }
+
+    @When("valid writer {string} and invalid Title {string} and ISBN {string} and Tag {string} and Description {string} are entered")
+    public void validWriterAndInvalidTitleAndISBNAndTagAndDescriptionAreEntered(String writer, String title, String isbn, String tags, String desc) {
+        createBookWith(writer, title, isbn, tags, desc);
+    }
+
+    @Then("Listing of all books does not show the title {string}")
+    public void listingOfAllBooksDoesNotShowTheTitle(String title) {
+         assertTrue(!driver.getPageSource().contains(title));
     }
 
     @After
