@@ -72,10 +72,23 @@ public class Stepdefs {
         createNewBookIsSelected();
     }
 
+    @Given("Page for entering new link is selected")
+    public void newLinkIsSelected() {
+        createNewLinkIsSelected();
+    }
+
     @When("valid writer {string} and Title {string} and ISBN {string} and Tag {string} and Description {string} are entered")
     public void correctBookIsEntered(String writer, String title, String isbn, String tags, String desc) {
         createBookWith(writer, title, isbn, tags, desc);
+    }
 
+    @When("valid writer {string} and Title {string} and URL {string} and Description {string} isVideo {int} for link are entered")
+    public void correctLinkIsEntered(String writer, String title, String url, String desc, int isVideo) {
+        boolean video = false;
+        if(isVideo >= 1) {
+            video = true;
+        }
+        createLinkWith(writer, title, url, desc, video);
     }
 
     @Then("Listing of all books shows the title {string}")
@@ -113,6 +126,10 @@ public class Stepdefs {
         driver.get(baseUrl + "/new_book");
     }
 
+    private void createNewLinkIsSelected() {
+        driver.get(baseUrl + "/new_link");
+    }
+
     private void sleep(int n) {
         try {
             Thread.sleep(n * 1000);
@@ -134,7 +151,23 @@ public class Stepdefs {
         element = driver.findElement(By.name("lisaa"));
         sleep(2);
         element.submit();
-
     }
 
+    private void createLinkWith(String writer, String title, String url, String desc, boolean isVideo) {
+        WebElement element = driver.findElement(By.name("author"));
+        element.sendKeys(writer);
+        element = driver.findElement(By.name("title"));
+        element.sendKeys(title);
+        element = driver.findElement(By.name("url"));
+        element.sendKeys(url);
+        element = driver.findElement(By.name("description"));
+        element.sendKeys(desc);
+        if (isVideo) {
+            element = driver.findElement(By.name("isVideo"));
+            element.click();
+        }
+        element = driver.findElement(By.name("lisaa"));
+        sleep(2);
+        element.submit();
+    }
 }
