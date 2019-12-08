@@ -28,12 +28,32 @@ public class Stepdefs {
 
     String baseUrl = "http://localhost:4567";
 
+    @Given("There are books stored in the application and single view of book is clicked")
+    public void thereAreBooksStoredInTheApplicationAndSingleViewOfBookIsClicked() {
+        createInitialBooks();
+        WebElement element = driver.findElement(By.linkText("Ohjelmistotuotanto"));
+        element.click();
+    }
+
+    @When("User cliks edit and inputs new title {string} and presses submit")
+    public void userCliksEditAndInputsNewTitleAndPressesSubmit(String title) {
+        WebElement element = driver.findElement(By.name("edit"));
+        element.submit();
+        element = driver.findElement(By.name("title"));
+        element.clear();
+        element.sendKeys(title);
+        element = driver.findElement(By.name("muokkaa"));
+        element.submit();
+    }
+
+    @Then("Edited title {string} is stored in the application")
+    public void editedTitleIsStoredInTheApplication(String title) {
+        assertTrue(driver.getPageSource().contains(title));
+    }
+
     @Given("There are books stored in the application")
     public void thereAreBooksStoredInTheApplication() {
-        createNewBookIsSelected();
-        createBookWith("Matti", "Ohjelmistotuotanto", "111AA", "syksy2019", "Tärkeää");
-        createNewBookIsSelected();
-        createBookWith("Pekka", "Tietorakenteet ja algoritmit", "2AAAA", "syksy 2019", "vaikeaa");
+        createInitialBooks();
     }
 
     @When("User opens the application")
@@ -80,6 +100,13 @@ public class Stepdefs {
     @After
     public void tearDown() {
         driver.quit();
+    }
+
+    private void createInitialBooks() {
+        createNewBookIsSelected();
+        createBookWith("Matti", "Ohjelmistotuotanto", "111AA", "syksy2019", "Tärkeää");
+        createNewBookIsSelected();
+        createBookWith("Pekka", "Tietorakenteet ja algoritmit", "2AAAA", "syksy 2019", "vaikeaa");
     }
 
     private void createNewBookIsSelected() {
