@@ -90,6 +90,14 @@ public class Stepdefs {
         }
         createLinkWith(writer, title, url, desc, video);
     }
+    
+    @When("valid isbn {string} is added to text box and search button is clicked")
+    public void bookSearchedByISBN(String isbn) {
+        WebElement element = driver.findElement(By.id("isbn2"));
+        element.sendKeys(isbn);
+        element = driver.findElement(By.name("etsiISBN"));
+        element.click();
+    }
 
     @Then("Listing of all books shows the title {string}")
     public void bookIsAdded(String title) {
@@ -108,6 +116,13 @@ public class Stepdefs {
     @Then("Listing of all books does not show the title {string}")
     public void listingOfAllBooksDoesNotShowTheTitle(String title) {
         assertTrue(!driver.getPageSource().contains(title));
+    }
+    
+    @Then("addition form shows the author {string}")
+    public void additionFormShowsTheAuthor(String author) {
+        WebElement element = driver.findElement(By.id("author"));
+        String textbox = element.getAttribute("value");
+        assertTrue(textbox.contains(author));
     }
 
     @After
