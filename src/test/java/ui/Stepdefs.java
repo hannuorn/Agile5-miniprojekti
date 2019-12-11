@@ -87,10 +87,10 @@ public class Stepdefs {
         createBookWith(writer, title, isbn, tags, desc);
     }
 
-    @When("valid writer {string} and Title {string} and URL {string} and Description {string} isVideo {int} for link are entered")
-    public void correctLinkIsEntered(String writer, String title, String url, String desc, int isVideo) {
+    @When("writer {string} and Title {string} and URL {string} and Description {string} and isVideo {string} for link are entered")
+    public void correctLinkIsEntered(String writer, String title, String url, String desc, String isVideo) {
         boolean video = false;
-        if (isVideo >= 1) {
+        if (isVideo.equals("enabled")) {
             video = true;
         }
         createLinkWith(writer, title, url, desc, video);
