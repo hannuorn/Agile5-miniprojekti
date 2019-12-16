@@ -1,4 +1,4 @@
-# Miniprojekti
+# Agile 5: Vinkkikirjasto
 
 * [Vinkkikirjasto Herokussa](http://vinkkikirjasto.herokuapp.com/)
 * [CircleCI](https://circleci.com/gh/hannuorn/Agile5-miniprojekti)
